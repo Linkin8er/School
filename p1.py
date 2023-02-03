@@ -53,8 +53,10 @@ def is_sorted(A) :
     Keyword arguments:
     A - a Python list.
     """
+    
     sorted = True
-
+    #This for loop runs through the array, checking to make sure each number in it is less than the next
+    #
     for i in range(0, len(A)-1, +1):
         if (A[i] > A[i+1]) : sorted = False
 

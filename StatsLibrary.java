@@ -73,6 +73,13 @@ class StatsWizard{
         
     }
 
+    public void combinationSolver(){
+
+    }
+
+    public void permutationSolver(){
+        
+    }
 
     //This runs though and makes sure the user inputs legal choices when picking numbers of some kind. 
     
