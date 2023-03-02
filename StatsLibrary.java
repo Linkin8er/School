@@ -68,9 +68,9 @@ class StatsWizard{
         System.out.println("Hello there! I hear you may have some statistics assignments, what would you like to do?");
         operationPicker();
     }
+    //This method runs a loop that calls other methods depending on what the user needs to do
     public void operationPicker(){
         boolean wantsToContinue = true;
-        
         while(wantsToContinue)
         {
             System.out.println("1) Find a mean\n2) Find a median\n3) Find a mode\n4) Find the standard deviation\n5) Find a permutation\n6) Find a combination\n7) Find a binomial distribution\n8) Do some set operations\n9) End");
@@ -89,6 +89,7 @@ class StatsWizard{
         System.out.println("\n\nHave a great day!");
     }
 
+    //This just runs a for loop to multiply a number by each whole number less than it greater than 0(factorial!).
     public BigInteger factorial(int x){
         BigInteger xFactorial = BigInteger.valueOf(1);
         for (int i = x; i > 0; i--){
@@ -98,6 +99,8 @@ class StatsWizard{
         return xFactorial;
     }
 
+    //Takes and finds the mean of a list. Then, subtracts each value in the list by the mean, and squares the result
+    //That is then summed, and devided by the size of the data set-1. This gives the variance, which is rooted to get deviation
     public double standardDeviationCalculator(ArrayList<Double> dataSet){
 
         //Finds the mean of the list
@@ -111,6 +114,7 @@ class StatsWizard{
 
     }
 
+    //Easy method, just adds up the values in a list, and divides by the total number of elements
     public double findMean(ArrayList<Double> dataSet){
         
         double dSum = 0;
@@ -121,6 +125,7 @@ class StatsWizard{
         return mean;
     }
 
+    //This one is also easy. It takes in a sorted list, and checks to see the size to find the median
     public double findMedian(ArrayList<Double> dataSet){
 
         double dMedian = 0;
@@ -134,6 +139,7 @@ class StatsWizard{
         return dMedian;
     }
 
+    //The mode is extra fun, it uses a hash map to store each value, and the number of times it is repeated
     public double findMode(ArrayList<Double> dataSet){
 
         HashMap<Double,Integer> modeTracker = new HashMap<Double,Integer>();
@@ -161,11 +167,9 @@ class StatsWizard{
         return currentMode;
     }
 
+    //Gets the number of objects in the set(n), and the number of selected objects from the set(r)
+    //P(number of permutations) = n!/(n-r)!
     public int findPermutation(int totalObjects, int selectedObjects){
-
-        //Gets the number of objects in the set(n), and the number of selected objects from the set(r)
-        //P(number of permutations) = n!/(n-r)!
-
 
         if(totalObjects == 0 && selectedObjects == 0){
             System.out.println("This function requires you enter the total number of objects in the set(n), followed by the number of objects selected(r)");
