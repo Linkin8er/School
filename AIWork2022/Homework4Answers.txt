@@ -1,0 +1,38 @@
+6A) Describe in words how the number of expanded states compares for UCS and A* 
+    with each of the two different heuristics.
+        The UCS search expanded significantly more states than both of the A* searches. 
+        A* with the Manhattan distance heuristic also produced less than or equal to A* with Misplaced Tiles heuristic
+
+6B)	Explain why the number of expanded states varies among those three searches 
+    in the way you observed in your answer to 6A.
+        The number of expanded states varies between A* with manhattin and A*with Misplaced Tiles as Manhattin distance is a much better heuristic. 
+        UCS on the other hand is just much less efficient. 
+
+6C) Describe in words how the number of expanded states compares for Iterative Deepening 
+    and IDA* with each of the two different heuristics.
+        Iterative Deepening expanded more states than both IDA* searches
+        Both IDA* were similar at low solutions, though the search with a better heuristic was less as the solutions got higher
+	
+6D) Explain why the number of expanded states varies among those three searches 
+    in the way you observed in your answer to 6C. 
+        Similar to 6C, the number of expanded states varies between IDA* with manhattin and IDA*with Misplaced Tiles as Manhattin distance is a much better heuristic. 
+        ID on the other hand is just much less efficient than the IDA* search.
+
+6E) How does the iterative deepening and IDA* variations compare to UCS and the A* variations
+    in number of expanded states? 
+        Overall, A* and IDA* with Manhattan distance performed the best. 
+        The worst were Iterative Deepening, followed by UCS. 
+        The A* and IDA* with Misplaced Tiles heuristic were both fine, however they were out performed by Manhattan distance
+
+6F) Describe the memory usage (max states in memory) that you observed for UCS, and the
+    two variations of A*.
+        Similar to the expanded states in the first question, UCS used the most memory while the two A*s were much better 
+	
+6G) Describe the relative memory usage (max states in memory) that you observed for Iterative Deepening 
+    and IDA* with the two different heuristics.
+        For all 3 of the searches, they have the same memory usage!
+	
+6H) Explain the memory usage that you observed for the three iterative deepening algorithms (IDA* and ID) 
+    versus the others (UCS and A*).
+        All three of the ID searches have the same memory useage, as they all only store only the nodes in the current path.
+        A* on the other hand stores the unexplored nodes, which adds up quickly. 
