@@ -1,22 +1,19 @@
-package Cards;
+package Cards.CardTemplates;
 
-import Cards.CardTemplates.PokemonCreature;
+public class CharmanderOBF extends PokemonCreature{
+    public CharmanderOBF(){
 
-public class CharmanderPAF extends PokemonCreature{
-
-    public CharmanderPAF(){
-
-        cardName = "Charmander (PAF)";
+        cardName = "Charmander (OBF)";
         cardType = "Basic Pokemon";
-        HP = 70;
+        HP = 60;
 
-        attackOneDamage = 0;
+        attackOneDamage = 30;
         attackOneName = "Blazing Destruction";
         attackOneDescription = "Attack One: "+attackOneName+" deals " + attackOneDamage + " damage.\nIt costs 1 energy and destroys the current stadium.";
 
-        attackTwoDamage = 30;
-        attackTwoName = "Steady Firebreathing";
-        attackTwoDescription = "Attack Two: "+attackTwoName+" deals " + attackTwoDamage + " damage.\nIt costs 2 energy";
+        attackTwoDamage = 0;
+        attackTwoName = "";
+        attackTwoDescription = "No second attack";
 
         cardDescription = "Name: "+cardName+"\nCard type:"+cardType+"\nCurrent HP: "+HP+"\n"+attackOneDescription+"\n"+attackTwoDescription;
 

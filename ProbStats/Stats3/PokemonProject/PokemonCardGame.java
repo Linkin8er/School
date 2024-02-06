@@ -46,10 +46,14 @@ public class PokemonCardGame {
 
     public void startOfGame(){
 
-        System.out.println(player1.getName() +",draw your opening hand");
+        System.out.println(player1.getName() +",draw your opening hand!");
         int player1Fails = player1.openingHand(0);
+        System.out.println(player2.getName() +",draw your opening hand");
+        int player2Fails = player2.openingHand(0);
         System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
-
+        player2.drawCard(player1Fails);
+        System.out.println(player2.getName() +" had " + player2Fails +" failed hands, so "+ player1.getName() +" will draw "+player2Fails+" more cards");
+        player1.drawCard(player1Fails);
 
     }
 
@@ -61,16 +65,45 @@ public class PokemonCardGame {
 
     public void takeTurn(PokemonPlayer currentPlayer){
 
+        currentPlayer.drawCard(1);
+        System.out.println(currentPlayer.getName()+", What would you like to do?");
+        System.out.println("1) Play a card\n2) Attack (and end your turn)\n3) Retreat\n4) Use an ability\n5) Check something");
+        int playerChoice = choiceChecker(1, 5);
+
+        if (playerChoice == 1) playCard(currentPlayer);
+        if (playerChoice == 2) playCard(currentPlayer);
+        if (playerChoice == 3) retreat();
+        if (playerChoice == 4) playCard(currentPlayer);
+        if (playerChoice == 5) checkStatus();
+
     }
 
     public void playCard(PokemonPlayer currentPlayer){
+
         System.out.println(currentPlayer.getName() +", what card would you like to play?");
         currentPlayer.printHand();
-        choiceChecker(1, currentPlayer.getHandSize());
+        int playerChoice = choiceChecker(1, currentPlayer.getHandSize()-1);
+        System.out.println(currentPlayer.getDescription(playerChoice));
+        System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
+        int playerChoice2 = choiceChecker(1, 2);
+        if (playerChoice2 == 1) { 
+
+            currentPlayer.playCard(playerChoice);
+            System.out.println("Your active pokemon is now:\n" + currentPlayer.getActivePokemon().getCardDescription());
+        }
+
+    }
+
+    public void retreat(){
+
+    }
+
+    public void checkStatus(){
+
     }
 
     public void endOfRound(){
-        
+
     }
 
     public int choiceChecker(int nLowerBounds, int nUpperBounds)

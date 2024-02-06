@@ -6,10 +6,16 @@ public class PokemonCreature extends PokemonCard implements Attackable{
     protected int HP;
     protected String creatureType;
     private ArrayList<PokemonCard> attachedEnergies;
+
     protected String attackOneName;
-    protected String attackTwoName;
+    protected String attackOneCost;
     protected int attackOneDamage;
+    protected String attackOneDescription;
+
+    protected String attackTwoName;
+    protected String attackTwoCost;
     protected int attackTwoDamage;
+    protected String attackTwoDescription;
 
     public PokemonCreature(){
         cardType = "Pokemon";

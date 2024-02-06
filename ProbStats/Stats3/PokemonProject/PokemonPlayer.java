@@ -10,6 +10,8 @@ public class PokemonPlayer {
     private ArrayList<PokemonCard> hand;
     private ArrayList<PokemonCard> discard;
     private ArrayList<PokemonCard> prizeCards;
+    private PokemonCard activeSpot;
+    private ArrayList<PokemonCard> bench;
     private String name;
 
     public PokemonPlayer(String playerName){
@@ -19,6 +21,7 @@ public class PokemonPlayer {
         hand = new ArrayList<PokemonCard>();
         prizeCards = new ArrayList<PokemonCard>();
     }
+    
     public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
 
         ArrayList<PokemonCard> deckList = new ArrayList<PokemonCard>();
@@ -73,19 +76,27 @@ public class PokemonPlayer {
     
     public void printHand(){
         for(int i = 0; i < hand.size()-1; i++){
-            System.out.println(i + ") "+ hand.get(i).getCardName());
+            System.out.println((i+1) + ") "+ hand.get(i).getCardName());
         }
     }
 
+    public void playCard(int cardChoice){
+        activeSpot = hand.remove(cardChoice-1);
+    }
+
     public void createPrizePile(){for(int i =0; i < 6; i++) {prizeCards.add(deck.remove(deck.size()-1));}}
-    public int getHandSize(){ return hand.size();}
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
-    public void drawCard(int numToDraw){ for(int i =0; i <= numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
+    
+    public void drawCard(int numToDraw){ for(int i = 0; i < numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
+
+    public int getHandSize(){ return hand.size();}
     public String getName(){ return name;}
     public int getPrizeSize(){return prizeCards.size();}
+    public String getDescription(int card){ return hand.get(card).getCardDescription();}
+    public PokemonCard getActivePokemon(){ return activeSpot;}
     
 
 }
