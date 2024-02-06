@@ -1,4 +1,4 @@
-package Cards;
+package Cards.CardTemplates;
 import java.util.ArrayList;
 
 public class PokemonCard {

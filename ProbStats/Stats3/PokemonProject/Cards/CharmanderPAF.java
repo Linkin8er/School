@@ -1,4 +1,7 @@
 package Cards;
+
+import Cards.CardTemplates.PokemonCreature;
+
 public class CharmanderPAF extends PokemonCreature{
 
     

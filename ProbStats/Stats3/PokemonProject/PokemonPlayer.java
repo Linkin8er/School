@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import Cards.*;
+import Cards.CardTemplates.*;
 
 public class PokemonPlayer {
 
@@ -63,6 +64,7 @@ public class PokemonPlayer {
         }
         return pokemonCards;
     }
+    
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
     public void drawCard(int numToDraw){ for(int i =0; i <= numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
