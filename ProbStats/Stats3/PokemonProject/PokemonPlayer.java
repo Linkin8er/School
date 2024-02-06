@@ -6,17 +6,12 @@ public class PokemonPlayer {
     private ArrayList<PokemonCard> deck;
     private ArrayList<PokemonCard> hand;
     private ArrayList<PokemonCard> discard;
-    private int pokemonin;
 
-    public PokemonPlayer(int pokemoninclusion){
-
-        pokemonin = pokemoninclusion;
-        deck = createDeck();
-        shuffleDeck();
+    public PokemonPlayer(){
         hand = new ArrayList<PokemonCard>();
     }
 
-    private ArrayList<PokemonCard> createDeck(){
+    public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
 
         ArrayList<PokemonCard> deckList = new ArrayList<PokemonCard>();
         PokemonCreature pikachu = new PokemonCreature();
@@ -28,7 +23,7 @@ public class PokemonPlayer {
         for(int i =0; i < 0; i++) {deckList.add(bill);}
 
         Collections.shuffle(deckList);
-        //System.out.println("Deck is made");
+        
         return deckList;
     }
     public int openingHand(int redraws){
@@ -56,9 +51,18 @@ public class PokemonPlayer {
 
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
     
-    public int getPokemon(){ return pokemonin; }
+    public int getPokemon(){ 
+        int pokemonCards = 0;
+        for(int i = 0; i < deck.size(); i++){
+            if(deck.get(i).getCardType().equals("Creature")){
+                pokemonCards++;
+            }
+        }
+        return pokemonCards;
+    }
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
     public void drawCard(int numToDraw){ for(int i =0; i <= numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
+    public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     
 
 }

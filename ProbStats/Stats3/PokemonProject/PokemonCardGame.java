@@ -5,8 +5,8 @@ public class PokemonCardGame {
 
     public PokemonCardGame(){
 
-        Player1 = new PokemonPlayer(1);
-        Player2 = new PokemonPlayer(1);       
+        Player1 = new PokemonPlayer();
+        Player2 = new PokemonPlayer();       
     }
 
     public void play(){
