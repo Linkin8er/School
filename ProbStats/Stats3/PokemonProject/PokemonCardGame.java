@@ -1,35 +1,76 @@
 import java.util.Scanner;
 public class PokemonCardGame {
 
-    private PokemonPlayer Player1;
-    private PokemonPlayer Player2;
+    private PokemonPlayer player1;
+    private PokemonPlayer player2;
     Scanner scan = new Scanner(System.in);
 
     public PokemonCardGame(){
         
-        Player1 = new PokemonPlayer();
-        Player2 = new PokemonPlayer();       
+        System.out.println("Player1, what is your name?");
+        String Player1Name = scan.nextLine();
+        player1 = new PokemonPlayer(Player1Name);
+
+        System.out.println("Player2, what is your name?");
+        String Player2Name = scan.nextLine();
+        player2 = new PokemonPlayer(Player2Name);       
     }
 
-    public void play(){
+    public void runGame(){
 
         System.out.println("Game is started");
         preGame();
         startOfGame();
-    }
-    public void startOfGame(){
 
-        System.out.println("Player 1 Draw");
-        System.out.println(Player1.openingHand(0));
-
+        while(player1.getPrizeSize() > 0 && player2.getPrizeSize() > 0){
+            gameRounds();
+        }
+        
     }
 
     public void preGame(){
 
-        System.out.println("Player1, which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode");
-        int playerChoice = choiceChecker(1,4);
+        int playerChoice;
+        System.out.println(player1.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode");
+        playerChoice = choiceChecker(1,4);
 
-        if (playerChoice == 1) Player1.createCharizardDeck();
+        if (playerChoice == 1) player1.createCharizardDeck();
+        player1.createPrizePile();
+
+        System.out.println("\n" + player2.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode");
+        playerChoice = choiceChecker(1,4);
+
+        if (playerChoice == 1) player2.createCharizardDeck();
+        player2.createPrizePile();
+    }
+
+    public void startOfGame(){
+
+        System.out.println(player1.getName() +",draw your opening hand");
+        int player1Fails = player1.openingHand(0);
+        System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
+
+
+    }
+
+    public void gameRounds(){
+        takeTurn(player1);
+        takeTurn(player2);
+        endOfRound();
+    }
+
+    public void takeTurn(PokemonPlayer currentPlayer){
+
+    }
+
+    public void playCard(PokemonPlayer currentPlayer){
+        System.out.println(currentPlayer.getName() +", what card would you like to play?");
+        currentPlayer.printHand();
+        choiceChecker(1, currentPlayer.getHandSize());
+    }
+
+    public void endOfRound(){
+        
     }
 
     public int choiceChecker(int nLowerBounds, int nUpperBounds)

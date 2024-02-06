@@ -1,8 +1,7 @@
 public class MonteCarloPokeTester {
 
     public MonteCarloPokeTester(int numPokemon){
-        PokemonCardGame testGame = new PokemonCardGame();
-        PokemonPlayer playerTest = new PokemonPlayer();
+        PokemonPlayer playerTest = new PokemonPlayer("Monty");
 
         for (int i = 1; i <= numPokemon; i++){
             

@@ -9,9 +9,15 @@ public class PokemonPlayer {
     private ArrayList<PokemonCard> deck;
     private ArrayList<PokemonCard> hand;
     private ArrayList<PokemonCard> discard;
+    private ArrayList<PokemonCard> prizeCards;
+    private String name;
 
-    public PokemonPlayer(){
+    public PokemonPlayer(String playerName){
+
+        name = playerName;
+        deck = new ArrayList<PokemonCard>();
         hand = new ArrayList<PokemonCard>();
+        prizeCards = new ArrayList<PokemonCard>();
     }
     public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
 
@@ -65,11 +71,21 @@ public class PokemonPlayer {
         return pokemonCards;
     }
     
+    public void printHand(){
+        for(int i = 0; i < hand.size()-1; i++){
+            System.out.println(i + ") "+ hand.get(i).getCardName());
+        }
+    }
+
+    public void createPrizePile(){for(int i =0; i < 6; i++) {prizeCards.add(deck.remove(deck.size()-1));}}
+    public int getHandSize(){ return hand.size();}
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
     public void drawCard(int numToDraw){ for(int i =0; i <= numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
+    public String getName(){ return name;}
+    public int getPrizeSize(){return prizeCards.size();}
     
 
 }

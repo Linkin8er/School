@@ -4,9 +4,9 @@ import Cards.CardTemplates.PokemonCreature;
 
 public class CharmanderPAF extends PokemonCreature{
 
-    
-
     public CharmanderPAF(){
+
+        cardName = "Charmander (PAF)";
         cardType = "Basic Pokemon";
         HP = 70;
 
