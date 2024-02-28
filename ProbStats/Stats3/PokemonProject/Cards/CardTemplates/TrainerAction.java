@@ -1,7 +1,8 @@
 package Cards.CardTemplates;
+import java.util.ArrayList;
 
 public interface TrainerAction {
 
-    void playAction();
+    void playAction(ArrayList<PokemonCard> targetDeck, PokemonCreature targetPokemon);
     
 }
