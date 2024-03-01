@@ -1,8 +1,11 @@
 import java.util.Scanner;
+import Cards.CardTemplates.*;
+
 public class PokemonCardGame {
 
     private PokemonPlayer player1;
     private PokemonPlayer player2;
+    private PokemonTrainer currentStadium;
     Scanner scan = new Scanner(System.in);
 
     public PokemonCardGame(){
@@ -50,7 +53,7 @@ public class PokemonCardGame {
         int player1Fails = player1.openingHand(0);
         System.out.println(player2.getName() +",draw your opening hand");
         int player2Fails = player2.openingHand(0);
-        System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
+        System.out.println(player1.getName() +" had " + player1Fails +" mulligans, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
         player2.drawCard(player1Fails);
         System.out.println(player2.getName() +" had " + player2Fails +" failed hands, so "+ player1.getName() +" will draw "+player2Fails+" more cards");
         player1.drawCard(player1Fails);

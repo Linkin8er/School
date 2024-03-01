@@ -21,17 +21,15 @@ public class PokemonPlayer {
         hand = new ArrayList<PokemonCard>();
         prizeCards = new ArrayList<PokemonCard>();
     }
-    
+
     public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
 
         ArrayList<PokemonCard> deckList = new ArrayList<PokemonCard>();
         CharmanderPAF mander = new CharmanderPAF();
         PokemonEnergy fire = new PokemonEnergy();
-        PokemonSupporter bill = new PokemonSupporter();
 
         for(int i =0; i < (60-pokemonin); i++) {deckList.add(fire);}
         for(int i =0; i < pokemonin; i++) {deckList.add(mander);}
-        for(int i =0; i < 0; i++) {deckList.add(bill);}
 
         Collections.shuffle(deckList);
         
@@ -40,7 +38,9 @@ public class PokemonPlayer {
 
     public void createCharizardDeck(){
         CharmanderPAF mander1 = new CharmanderPAF();
-        for(int i =0; i <= 60; i++) {deck.add(mander1);}
+        CharmanderOBF mander2 = new CharmanderOBF();
+        for(int i =0; i < 30; i++) {deck.add(mander1);}
+        for(int i =0; i < 30; i++) {deck.add(mander2);}
     }
     
     public int openingHand(int redraws){
@@ -81,6 +81,7 @@ public class PokemonPlayer {
     }
 
     public void playCard(int cardChoice){
+
         activeSpot = hand.remove(cardChoice-1);
     }
 
