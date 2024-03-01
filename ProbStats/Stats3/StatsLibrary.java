@@ -4,13 +4,13 @@
 */
 
 /*
-*   01/25/2023 Currently there is a bug
+*   01/25/2024 Currently there is a bug
 *   After entering numbers into the data set for mean, choice checker requests you enter a proper number
 *   Also, after finnishing the list and getting the mean, it immediately restarts you in the mean function 
 */
 
 /*
-*   02/20/2023
+*   02/20/2024
 *   It has been way too long since I worked on this
 *   There is still a bug in the choice checker, but it isnt breaking, so progress time
 *   I HAVE FIXED THE BUG, AW YEAHHHHHH
@@ -18,17 +18,17 @@
 */
 
 /*
-*   02/21/2023
+*   02/21/2024
 *   Implimented the Mode method using a hashmap. Very useful! Will nead to learn more about them
 */
 
 /*
-*   02/24/2023
+*   02/24/2024
 *   implemeneted the permutations and combinations methods
 */
 
 /*
-*   02/25/2023
+*   02/25/2024
 *   I have realized I should change most of this porogram
 *   Instead of running out of the constructor, I should make a method that runs it all
 *   I also should have each method do a calculation, without any output other than the return
@@ -40,9 +40,16 @@
 */
 
 /*
-*   02/27/2023
+*   02/27/2024
 *   I forgot the set operations
 *   attempting to implement union, intersection, and compliment
+*
+*/
+
+/*
+*   02/29/2024
+*   Adding Hypergeometric Distributions
+*   Also adding Expected and Variance for the Distributions
 *
 */
 
@@ -73,18 +80,19 @@ class StatsWizard{
         boolean wantsToContinue = true;
         while(wantsToContinue)
         {
-            System.out.println("1) Find a mean\n2) Find a median\n3) Find a mode\n4) Find the standard deviation\n5) Find a permutation\n6) Find a combination\n7) Find a binomial distribution\n8) Find a Geometric distribution\n9) Do some set operations\n10)End");
-            userChoice = choiceChecker(1,10);
-            if(userChoice == 1) System.out.println("The mean of your data set is "+ (findMean(listMaker()))+"!\n");
-            if(userChoice == 2) System.out.println("The median of your data set is "+ (findMedian(listSorter(listMaker()))+"!\n"));
-            if(userChoice == 3) System.out.println("The mode of your data set is "+ (findMode(listMaker()))+"!\n");
-            if(userChoice == 4) System.out.println("The Standard Deviation of the set is: "+ standardDeviationCalculator(listMaker()));
-            if(userChoice == 5) System.out.println("The total permutations would be " + findPermutation(0, 0)+ "!\n");
-            if(userChoice == 6) System.out.println("The total combinations would be " + findCombination(0, 0)+ "!\n");
-            if(userChoice == 7) System.out.println("The Binomial Distribution is " + findBinomialDistribution()+ "!\n");
-            if(userChoice == 8) System.out.println("The Geometric Distribution is " + findGeometricDistribution() + "!\n");
-            if(userChoice == 9) setOperations();
-            if(userChoice == 10) wantsToContinue = false;
+            System.out.println("1) Do some set operations\n2) Find a mean\n3) Find a median\n4) Find a mode\n5) Find the standard deviation\n6) Find a permutation\n7) Find a combination\n8) Find a binomial distribution\n9) Find a Geometric distribution\n10) Find a Hypergeometric distribution\n11) End");
+            userChoice = choiceChecker(1,11);
+            if(userChoice == 1) setOperations();
+            if(userChoice == 2) System.out.println("The mean of your data set is "+ (findMean(listMaker()))+"!\n");
+            if(userChoice == 3) System.out.println("The median of your data set is "+ (findMedian(listSorter(listMaker()))+"!\n"));
+            if(userChoice == 4) System.out.println("The mode of your data set is "+ (findMode(listMaker()))+"!\n");
+            if(userChoice == 5) System.out.println("The Standard Deviation of the set is: "+ standardDeviationCalculator(listMaker()));
+            if(userChoice == 6) System.out.println("The total permutations would be " + findPermutation(0, 0)+ "!\n");
+            if(userChoice == 7) System.out.println("The total combinations would be " + findCombination(0, 0)+ "!\n");
+            if(userChoice == 8) System.out.println("The Binomial Distribution is " + findBinomialDistribution()+ "!\n");
+            if(userChoice == 9) System.out.println("The Geometric Distribution is " + findGeometricDistribution() + "!\n");
+            if(userChoice == 10) System.out.println("The Hypergeometric Distribution is " + findHypergometricDistribution() + "!\n");
+            if(userChoice == 11) wantsToContinue = false;
         }
         System.out.println("\n\nHave a great day!");
     }
@@ -99,7 +107,9 @@ class StatsWizard{
         return xFactorialB;
     }
 
+    //THIS DOES NOT WORK FOR BIG NUMBERS
     public long factorialL(int x){
+        
         long xFactorialL = 1;
         for (int i = x; i > 0; i--){
             
@@ -178,7 +188,7 @@ class StatsWizard{
 
     //Gets the number of objects in the set(n), and the number of selected objects from the set(r)
     //P(number of permutations) = n!/(n-r)!
-    public int findPermutation(int totalObjects, int selectedObjects){
+    public BigInteger findPermutation(int totalObjects, int selectedObjects){
 
         if(totalObjects == 0 && selectedObjects == 0){
             System.out.println("This function requires you enter the total number of objects in the set(n), followed by the number of objects selected(r)");
@@ -189,12 +199,12 @@ class StatsWizard{
             selectedObjects = choiceChecker(0, totalObjects);
         }
 
-        int permutations = (factorialB(totalObjects).divide(factorialB(totalObjects - selectedObjects))).intValue();
+        BigInteger permutations = (factorialB(totalObjects).divide(factorialB(totalObjects - selectedObjects)));
         return permutations;
         
     }
 
-    public long findCombination(int totalObjects, int chosingObjects){
+    public double findCombination(int totalObjects, int chosingObjects){
 
         //Runs the permutation solver, but devides it's answer by r!
         if(totalObjects == 0 && chosingObjects == 0){
@@ -206,7 +216,7 @@ class StatsWizard{
             chosingObjects = choiceChecker(0, totalObjects);
         }
 
-        int combinations = BigInteger.valueOf(findPermutation(totalObjects, chosingObjects)).divide(factorialB(chosingObjects)).intValue();
+        double combinations = (findPermutation(totalObjects, chosingObjects)).doubleValue()/(factorialB(chosingObjects)).doubleValue();
 
         return combinations;
 
@@ -332,6 +342,37 @@ class StatsWizard{
 
         double geometricDistribution = (Math.pow(probabilityOfSucess, (numberOfTrials-1)) * probabilityOfFailure);
         return geometricDistribution;
+    }
+
+    public double findHypergometricDistribution(){
+
+        //Needs to get n(Our sample size), y(How many of our desired we want), 
+        //r(Count of desired in set), and N(Total set size)
+        int n_SampleSet;
+        int y_Desired;
+        int r_DesiredSet;
+        int N_TotalSetCount;
+        int notInSet;
+        int notDesiredInSample;
+
+        System.out.println("This function requires you enter:\nThe total set size\nThe count of desired in the set\nThe sample size\nHow many of the desired you want");
+        System.out.println("First, enter the total set size (N):");
+        N_TotalSetCount = choiceChecker(0, -100);
+
+        System.out.println("Now, please enter the count of desired in the set (r), which must be less than or equal to the total set size:");
+        r_DesiredSet = choiceChecker(0, N_TotalSetCount);
+
+        System.out.println("Now, please enter the sample size (n), which must be less than or equal to the total set size:");
+        n_SampleSet = choiceChecker(0, N_TotalSetCount);
+
+        System.out.println("Finally, please enter How many of the desired you want (y), which must be less than or equal to the count of the sample set:");
+        y_Desired = choiceChecker(0, n_SampleSet);
+
+        notInSet = N_TotalSetCount - r_DesiredSet;
+        notDesiredInSample = n_SampleSet - y_Desired;
+
+        double hyperGeometricDistribution = (findCombination(r_DesiredSet, y_Desired) * findCombination(notInSet, notDesiredInSample)) / (findCombination(N_TotalSetCount, n_SampleSet));
+        return hyperGeometricDistribution;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
