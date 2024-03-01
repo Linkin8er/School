@@ -60,21 +60,11 @@ import java.util.Scanner;
 import java.util.HashMap;
 
 //This just runs the stats wizard
-public class StatsLibrary {
-    public static void main(String[] args){
-        StatsWizard runner = new StatsWizard();
-    }
-}
-
-class StatsWizard{
+public class StatsLibrary{
 
     private double userChoice;
-    Scanner scan = new Scanner(System.in);
-    //Constructor time! This runs continuously unti the user opts out. 
-    StatsWizard(){
-        System.out.println("Hello there! I hear you may have some statistics assignments, what would you like to do?");
-        operationPicker();
-    }
+    Scanner scan = new Scanner(System.in); 
+
     //This method runs a loop that calls other methods depending on what the user needs to do
     public void operationPicker(){
         boolean wantsToContinue = true;
