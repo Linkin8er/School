@@ -25,7 +25,4 @@ public class MonteCarloPokeTester {
         }
 
     }
-    public static void main(String[] args){
-        MonteCarloPokeTester test = new MonteCarloPokeTester(15);
-    }
 }

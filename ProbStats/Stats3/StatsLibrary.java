@@ -53,6 +53,13 @@
 *
 */
 
+/*
+*   03/01/2024
+*   Fixed Hypergeometric, and actually added
+*   Expected and Variance for the Distributions
+*
+*/
+
 //Add conditional prob
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -216,24 +223,30 @@ public class StatsLibrary{
     public double findBinomialDistribution(){
         //Needs to get n(number of trials), x(number of times for a specific outcome within n trials), 
         //p(probability of success on a single trial), and q(probability of failure on a single trial)
-        int numberOfTrials;
-        int numberOfSucesses;
-        double probabilityOfSucess;
+        int n_NumberOfTrials;
+        int y_NumberOfSucesses;
+        double p_ProbabilityOfSucess;
 
         System.out.println("This function requires you enter:\nThe total number of trials(n)\nThe specific number of sucesses you want\nThe probability of sucess");
         System.out.println("First, enter the total number of trials:");
-        numberOfTrials = choiceChecker(0, -100);
+        n_NumberOfTrials = choiceChecker(0, -100);
 
         System.out.println("Now, please enter the exact number of sucesses, which must be less than or equal to the number of trials:");
-        numberOfSucesses = choiceChecker(0, numberOfTrials);
+        y_NumberOfSucesses = choiceChecker(0, n_NumberOfTrials);
 
         System.out.println("Finally, please enter the probability of sucess, which must be written as a decimal:");
-        probabilityOfSucess = choiceChecker(0.0, 1.0);
+        p_ProbabilityOfSucess = choiceChecker(0.0, 1.0);
 
         //The probability of failure is going to be 1 - the probability of sucess. 
-        double probabilityOfFailure = 1 - probabilityOfSucess;
+        double q_ProbabilityOfFailure = 1 - p_ProbabilityOfSucess;
 
-        double binomialDistribution = findCombination(numberOfTrials, numberOfSucesses) * Math.pow(probabilityOfSucess, numberOfSucesses) * Math.pow(probabilityOfFailure, (numberOfTrials-numberOfSucesses));
+        double binomialDistribution = 0;
+        System.out.println("Now, would you like: \n1) The PMF\n2) The expected/mean\n3) The variance\n4) The Standard Deviation");
+        userChoice = choiceChecker(1,4);
+        if(userChoice == 1) binomialDistribution = findCombination(n_NumberOfTrials, y_NumberOfSucesses) * Math.pow(p_ProbabilityOfSucess, y_NumberOfSucesses) * Math.pow(q_ProbabilityOfFailure, (n_NumberOfTrials-y_NumberOfSucesses));
+        if(userChoice == 2) binomialDistribution = n_NumberOfTrials * p_ProbabilityOfSucess;
+        if(userChoice == 3 || userChoice == 4) binomialDistribution = n_NumberOfTrials * p_ProbabilityOfSucess * q_ProbabilityOfFailure;
+        if(userChoice == 4) binomialDistribution = Math.sqrt(binomialDistribution);
 
         return binomialDistribution;
     }
@@ -317,20 +330,27 @@ public class StatsLibrary{
 
     public double findGeometricDistribution(){
         //Needs to get n(trial to get sucess), p(probability of success on a single trial), and q(probability of failure on a single trial)
-        int numberOfTrials;
-        double probabilityOfSucess;
+        int n_NumberOfTrials;
+        double p_ProbabilityOfSucess;
 
         System.out.println("This function requires you enter:\nThe total number of trials until sucess(y)\nand the probability of sucess");
-        System.out.println("First, enter the total number of trials:");
-        numberOfTrials = choiceChecker(0, -100);
+        System.out.println("First, enter the total number of trials(n):");
+        n_NumberOfTrials = choiceChecker(0, -100);
 
         System.out.println("Finally, please enter the probability of sucess, which must be written as a decimal:");
-        probabilityOfSucess = choiceChecker(0.0, 1.0);
+        p_ProbabilityOfSucess = choiceChecker(0.0, 1.0);
 
         //The probability of failure is going to be 1 - the probability of sucess. 
-        double probabilityOfFailure = 1 - probabilityOfSucess;
+        double q_ProbabilityOfFailure = 1 - p_ProbabilityOfSucess;
 
-        double geometricDistribution = (Math.pow(probabilityOfSucess, (numberOfTrials-1)) * probabilityOfFailure);
+        double geometricDistribution = 0;
+        System.out.println("Now, would you like: \n1) The PMF\n2) The expected/mean\n3) The variance\n4) The Standard Deviation");
+        userChoice = choiceChecker(1,4);
+        if(userChoice == 1) geometricDistribution = (Math.pow(p_ProbabilityOfSucess, (n_NumberOfTrials-1)) * q_ProbabilityOfFailure);
+        if(userChoice == 2) geometricDistribution = 1/p_ProbabilityOfSucess;
+        if(userChoice == 3 || userChoice == 4) geometricDistribution = ((q_ProbabilityOfFailure)/Math.pow(p_ProbabilityOfSucess, 2));
+        if(userChoice == 4) geometricDistribution = Math.sqrt(geometricDistribution);
+        
         return geometricDistribution;
     }
 
@@ -361,7 +381,14 @@ public class StatsLibrary{
         notInSet = N_TotalSetCount - r_DesiredSet;
         notDesiredInSample = n_SampleSet - y_Desired;
 
-        double hyperGeometricDistribution = (findCombination(r_DesiredSet, y_Desired) * findCombination(notInSet, notDesiredInSample)) / (findCombination(N_TotalSetCount, n_SampleSet));
+        double hyperGeometricDistribution = 0;
+        System.out.println("Now, would you like: \n1) The PMF\n2) The expected/mean\n3) The variance\n4) The Standard Deviation");
+        userChoice = choiceChecker(1,4);
+        if(userChoice == 1) hyperGeometricDistribution = (findCombination(r_DesiredSet, y_Desired) * findCombination(notInSet, notDesiredInSample)) / (findCombination(N_TotalSetCount, n_SampleSet));
+        if(userChoice == 2) hyperGeometricDistribution = ((n_SampleSet * r_DesiredSet) / (N_TotalSetCount)); 
+        if(userChoice == 3 || userChoice == 4) hyperGeometricDistribution = (n_SampleSet * (r_DesiredSet/N_TotalSetCount) * ((N_TotalSetCount - r_DesiredSet)/(N_TotalSetCount)) * ((N_TotalSetCount - n_SampleSet)/(N_TotalSetCount-1)));
+        if(userChoice == 4) hyperGeometricDistribution = Math.sqrt(hyperGeometricDistribution);
+        
         return hyperGeometricDistribution;
     }
 
