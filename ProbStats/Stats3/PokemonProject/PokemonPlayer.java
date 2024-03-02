@@ -14,9 +14,9 @@ public class PokemonPlayer {
     private ArrayList<PokemonCard> bench;
     private String name;
 
-    public PokemonPlayer(String playerName){
+    public PokemonPlayer(){
 
-        name = playerName;
+        name = "PlaceHolder";
         deck = new ArrayList<PokemonCard>();
         hand = new ArrayList<PokemonCard>();
         prizeCards = new ArrayList<PokemonCard>();
@@ -85,6 +85,7 @@ public class PokemonPlayer {
         activeSpot = hand.remove(cardChoice-1);
     }
 
+    public void setName(String newName){name = newName;}
     public void createPrizePile(){for(int i =0; i < 6; i++) {prizeCards.add(deck.remove(deck.size()-1));}}
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
     

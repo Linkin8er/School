@@ -115,6 +115,110 @@ public class StatsLibrary{
         return xFactorialL;
     }
     
+    //This goes through and has the user make a set of lists before performing an operation on them. 
+    public void setOperations(){
+        System.out.println("What kind of set operations were you looking to do?");
+        boolean wantsToContinue = true;
+            
+        while(wantsToContinue)
+        {
+            System.out.println("1) Find a Union\n2) Find an Intersection\n3) Find the compliment\n4) End");
+            userChoice = choiceChecker(1,4);
+    
+            if(userChoice == 1){
+                System.out.println("This operation requires you make two sets of numbers, which will then be unioned.");
+                System.out.println("Please begin entering your first set:");
+                ArrayList<Double> setOne = listSorter(listMaker());
+    
+                System.out.println("Now please begin entering your second set:");
+                ArrayList<Double> setTwo = listSorter(listMaker());
+                System.out.println("The union of your two sets is "+ findUnion(setOne, setTwo) +"!\n");
+            }
+    
+            if(userChoice == 2){
+                System.out.println("This operation requires you make two sets of numbers, which we will then find the intersect of.");
+                System.out.println("Please begin entering your first set:");
+                ArrayList<Double> setOne = listSorter(listMaker());
+
+                System.out.println("Now please begin entering your second set:");
+                ArrayList<Double> setTwo = listSorter(listMaker());
+                System.out.println("The intersection of your two sets is "+ findIntersect(setOne, setTwo) +"!\n");
+            }
+    
+            if(userChoice == 3){
+                System.out.println("This operation requires you make two sets of numbers, the set to be complimented and the whole set.");
+                System.out.println("Please begin entering your first set:");
+                ArrayList<Double> setOne = listSorter(listMaker());
+    
+                System.out.println("Now please begin entering the entire set:");
+                ArrayList<Double> setTwo = listSorter(listMaker());
+                System.out.println("The compliment of your set is "+ findCompliment(setOne, setTwo) +"!\n");
+            }
+            if(userChoice == 4) wantsToContinue = false;
+        }
+        userChoice = 1;
+    }  
+
+    //This goes through and adds 1 copy of each element in one list to a union list
+    //Then it does the same for the second, creating a combined list with 1 copy of each element
+    public ArrayList<Double> findUnion(ArrayList<Double> setOne, ArrayList<Double> setTwo){
+
+        ArrayList<Double> unionedSet = new ArrayList();
+        boolean inSet;
+
+        for(int w = 0; w < setOne.size(); w++){
+            inSet = false;
+            for(int x = 0; x < unionedSet.size(); x++){
+                //Why does java think 1 != 1? WHY
+                if(setOne.get(w).equals(unionedSet.get(x))) inSet = true;
+            }
+            if(!inSet) unionedSet.add(setOne.get(w));
+        }
+        for(int y = 0; y < setTwo.size(); y++){
+            inSet = false;
+            for(int z = 0; z < unionedSet.size(); z++){
+                if(setTwo.get(y).equals(unionedSet.get(z))) inSet = true;
+            }
+            if(!inSet) unionedSet.add(setTwo.get(y));
+        }
+        return unionedSet;
+    }
+
+    //This just goes though and find the intersect by checing what elements in set 1 are also in set 2
+    public ArrayList<Double> findIntersect(ArrayList<Double>setOne, ArrayList<Double>setTwo){
+
+        ArrayList<Double> intersectionedSet = new ArrayList();
+        boolean inSet;
+
+        for(int x = 0; x < setOne.size(); x++){
+            inSet = false;
+            for(int y = 0; y < setTwo.size(); y++){
+                
+                if(setOne.get(x).equals(setTwo.get(y)) && !(inSet)){
+                    inSet = true;
+                    intersectionedSet.add(setOne.get(x));
+                }
+            }
+        }
+        return intersectionedSet;
+    }
+
+    //This finds all the elements in set 2 not in set one to give us the compliment of set 1
+    public ArrayList<Double> findCompliment(ArrayList<Double>setOne, ArrayList<Double>setTwo){
+        ArrayList<Double> complimentSet1 = new ArrayList();
+        boolean inSet;
+
+        for(int x = 0; x < setTwo.size(); x++){
+            inSet = false;
+            for(int y = 0; y < setOne.size(); y++){
+                
+                if(setTwo.get(x).equals(setOne.get(y)))inSet = true;
+            }
+            if(!inSet) complimentSet1.add(setTwo.get(x));
+        }
+        return complimentSet1;
+    }
+
     //Takes and finds the mean of a list. Then, subtracts each value in the list by the mean, and squares the result
     //That is then summed, and devided by the size of the data set-1. This gives the variance, which is rooted to get deviation
     public double standardDeviationCalculator(ArrayList<Double> dataSet){
@@ -202,6 +306,7 @@ public class StatsLibrary{
         
     }
 
+    //This just takes the permutation and divides it by n!
     public double findCombination(int n_TotalObjects, int r_SelectedObjects){
 
         //Runs the permutation solver, but devides it's answer by r!
@@ -221,6 +326,7 @@ public class StatsLibrary{
     }
 
     //use the permutation and combination solver as needed to help with redundancy
+    //This can solve for the Binomial Distributions: PMF, Variance, standard deviation, and mean
     public double findBinomialDistribution(){
         //Needs to get n(number of trials), x(number of times for a specific outcome within n trials), 
         //p(probability of success on a single trial), and q(probability of failure on a single trial)
@@ -252,105 +358,7 @@ public class StatsLibrary{
         return binomialDistribution;
     }
 
-    public void setOperations(){
-        System.out.println("What kind of set operations were you looking to do?");
-        boolean wantsToContinue = true;
-        
-        while(wantsToContinue)
-        {
-            System.out.println("1) Find a Union\n2) Find an Intersection\n3) Find the compliment\n4) End");
-            userChoice = choiceChecker(1,4);
-
-            if(userChoice == 1){
-                System.out.println("This operation requires you make two sets of numbers, which will then be unioned.");
-                System.out.println("Please begin entering your first set:");
-                ArrayList<Double> setOne = listSorter(listMaker());
-
-                System.out.println("Now please begin entering your second set:");
-                ArrayList<Double> setTwo = listSorter(listMaker());
-                System.out.println("The union of your two sets is "+ findUnion(setOne, setTwo) +"!\n");
-            }
-
-            if(userChoice == 2){
-                System.out.println("This operation requires you make two sets of numbers, which we will then find the intersect of.");
-                System.out.println("Please begin entering your first set:");
-                ArrayList<Double> setOne = listSorter(listMaker());
-
-                System.out.println("Now please begin entering your second set:");
-                ArrayList<Double> setTwo = listSorter(listMaker());
-                System.out.println("The intersection of your two sets is "+ findIntersect(setOne, setTwo) +"!\n");
-            }
-
-            if(userChoice == 3){
-                System.out.println("This operation requires you make two sets of numbers, the set to be complimented and the whole set.");
-                System.out.println("Please begin entering your first set:");
-                ArrayList<Double> setOne = listSorter(listMaker());
-
-                System.out.println("Now please begin entering the entire set:");
-                ArrayList<Double> setTwo = listSorter(listMaker());
-                System.out.println("The compliment of your set is "+ findCompliment(setOne, setTwo) +"!\n");
-            }
-            if(userChoice == 4) wantsToContinue = false;
-        }
-        userChoice = 1;
-    }
-
-    public ArrayList<Double> findUnion(ArrayList<Double> setOne, ArrayList<Double> setTwo){
-
-        ArrayList<Double> unionedSet = new ArrayList();
-        boolean inSet;
-
-        for(int w = 0; w < setOne.size(); w++){
-            inSet = false;
-            for(int x = 0; x < unionedSet.size(); x++){
-                //Why does java think 1 != 1? WHY
-                if(setOne.get(w).equals(unionedSet.get(x))) inSet = true;
-            }
-            if(!inSet) unionedSet.add(setOne.get(w));
-        }
-        for(int y = 0; y < setTwo.size(); y++){
-            inSet = false;
-            for(int z = 0; z < unionedSet.size(); z++){
-                if(setTwo.get(y).equals(unionedSet.get(z))) inSet = true;
-            }
-            if(!inSet) unionedSet.add(setTwo.get(y));
-        }
-        return unionedSet;
-    }
-
-    public ArrayList<Double> findIntersect(ArrayList<Double>setOne, ArrayList<Double>setTwo){
-
-        ArrayList<Double> intersectionedSet = new ArrayList();
-        boolean inSet;
-
-        for(int x = 0; x < setOne.size(); x++){
-            inSet = false;
-            for(int y = 0; y < setTwo.size(); y++){
-                
-                if(setOne.get(x).equals(setTwo.get(y)) && !(inSet)){
-                    inSet = true;
-                    intersectionedSet.add(setOne.get(x));
-                }
-            }
-        }
-        return intersectionedSet;
-    }
-
-    public ArrayList<Double> findCompliment(ArrayList<Double>setOne, ArrayList<Double>setTwo){
-        ArrayList<Double> complimentSet1 = new ArrayList();
-        boolean inSet;
-
-        for(int x = 0; x < setTwo.size(); x++){
-            inSet = false;
-            for(int y = 0; y < setOne.size(); y++){
-                
-                if(setTwo.get(x).equals(setOne.get(y)))inSet = true;
-            }
-            if(!inSet) complimentSet1.add(setTwo.get(x));
-        }
-        return complimentSet1;
-    }
-
+    //This can solve for the Geomentric Distributions: PMF, Variance, standard deviation, and mean
     public double findGeometricDistribution(){
         //Needs to get n(trial to get sucess), p(probability of success on a single trial), and q(probability of failure on a single trial)
         int n_NumberOfTrials;
@@ -377,6 +385,7 @@ public class StatsLibrary{
         return geometricDistribution;
     }
 
+    //This can solve for the Hypergometric Distributions: PMF, Variance, standard deviation, and mean
     public double findHypergometricDistribution(){
 
         //Needs to get n(Our sample size), y(How many of our desired we want), 

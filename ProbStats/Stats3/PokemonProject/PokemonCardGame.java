@@ -3,23 +3,24 @@ import Cards.CardTemplates.*;
 
 public class PokemonCardGame {
 
-    private PokemonPlayer player1;
-    private PokemonPlayer player2;
+    private PokemonPlayer player1 = new PokemonPlayer();
+    private PokemonPlayer player2 = new PokemonPlayer();
     private PokemonTrainer currentStadium;
     Scanner scan = new Scanner(System.in);
 
     public PokemonCardGame(){
-        
-        System.out.println("Player1, what is your name?");
-        String Player1Name = scan.nextLine();
-        player1 = new PokemonPlayer(Player1Name);
-
-        System.out.println("Player2, what is your name?");
-        String Player2Name = scan.nextLine();
-        player2 = new PokemonPlayer(Player2Name);       
+              
     }
 
     public void runGame(){
+
+        System.out.println("Player1, what is your name?");
+        String Player1Name = scan.nextLine();
+        player1.setName(Player1Name);
+
+        System.out.println("Player2, what is your name?");
+        String Player2Name = scan.nextLine();
+        player2.setName(Player2Name); 
 
         System.out.println("Game is started");
         preGame();
