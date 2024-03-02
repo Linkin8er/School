@@ -139,6 +139,7 @@ public class StatsLibrary{
         }
         double mean = dSum/dataSet.size();
         return mean;
+        
     }
 
     //This one is also easy. It takes in a sorted list, and checks to see the size to find the median
@@ -185,35 +186,35 @@ public class StatsLibrary{
 
     //Gets the number of objects in the set(n), and the number of selected objects from the set(r)
     //P(number of permutations) = n!/(n-r)!
-    public BigInteger findPermutation(int totalObjects, int selectedObjects){
+    public BigInteger findPermutation(int n_TotalObjects, int r_SelectedObjects){
 
-        if(totalObjects == 0 && selectedObjects == 0){
+        if(n_TotalObjects == 0 && r_SelectedObjects == 0){
             System.out.println("This function requires you enter the total number of objects in the set(n), followed by the number of objects selected(r)");
             System.out.println("First, enter the objects in the set:");
-            totalObjects = choiceChecker(0, -100);
+            n_TotalObjects = choiceChecker(0, -100);
 
             System.out.println("Now, please enter the number of objectes selected, which must be less than or equal to the total objects:");
-            selectedObjects = choiceChecker(0, totalObjects);
+            r_SelectedObjects = choiceChecker(0, n_TotalObjects);
         }
 
-        BigInteger permutations = (factorialB(totalObjects).divide(factorialB(totalObjects - selectedObjects)));
+        BigInteger permutations = (factorialB(n_TotalObjects).divide(factorialB(n_TotalObjects - r_SelectedObjects)));
         return permutations;
         
     }
 
-    public double findCombination(int totalObjects, int chosingObjects){
+    public double findCombination(int n_TotalObjects, int r_SelectedObjects){
 
         //Runs the permutation solver, but devides it's answer by r!
-        if(totalObjects == 0 && chosingObjects == 0){
+        if(n_TotalObjects == 0 && r_SelectedObjects == 0){
             System.out.println("This function requires you enter the total number of objects in the set(n), followed by the number of chosing objects ");
             System.out.println("First, enter the objects in the set:");
-            totalObjects = choiceChecker(0, -100);
+            n_TotalObjects = choiceChecker(0, -100);
 
             System.out.println("Now, please enter the number of chosing objects, which must be less than or equal to the total objects:");
-            chosingObjects = choiceChecker(0, totalObjects);
+            r_SelectedObjects = choiceChecker(0, n_TotalObjects);
         }
 
-        double combinations = (findPermutation(totalObjects, chosingObjects)).doubleValue()/(factorialB(chosingObjects)).doubleValue();
+        double combinations = (findPermutation(n_TotalObjects, r_SelectedObjects)).doubleValue()/(factorialB(r_SelectedObjects)).doubleValue();
 
         return combinations;
 
@@ -291,6 +292,7 @@ public class StatsLibrary{
             }
             if(userChoice == 4) wantsToContinue = false;
         }
+        userChoice = 1;
     }
 
     public ArrayList<Double> findUnion(ArrayList<Double> setOne, ArrayList<Double> setTwo){
@@ -302,30 +304,51 @@ public class StatsLibrary{
             inSet = false;
             for(int x = 0; x < unionedSet.size(); x++){
                 //Why does java think 1 != 1? WHY
-                if(setOne.get(w) == unionedSet.get(x)) inSet = true;
-
-                System.out.println(setOne.get(w) +"\t" + unionedSet.get(x) + "\t" + inSet );
+                if(setOne.get(w).equals(unionedSet.get(x))) inSet = true;
             }
             if(!inSet) unionedSet.add(setOne.get(w));
         }
         for(int y = 0; y < setTwo.size(); y++){
             inSet = false;
             for(int z = 0; z < unionedSet.size(); z++){
-                if(setTwo.get(y) == unionedSet.get(z)) inSet = true;
-                System.out.println(setTwo.get(y) +"\t" + unionedSet.get(z) + "\t" + inSet );
+                if(setTwo.get(y).equals(unionedSet.get(z))) inSet = true;
             }
-            System.out.println("inset test +" + inSet);
             if(!inSet) unionedSet.add(setTwo.get(y));
         }
         return unionedSet;
     }
 
     public ArrayList<Double> findIntersect(ArrayList<Double>setOne, ArrayList<Double>setTwo){
-        return setOne;
+
+        ArrayList<Double> intersectionedSet = new ArrayList();
+        boolean inSet;
+
+        for(int x = 0; x < setOne.size(); x++){
+            inSet = false;
+            for(int y = 0; y < setTwo.size(); y++){
+                
+                if(setOne.get(x).equals(setTwo.get(y)) && !(inSet)){
+                    inSet = true;
+                    intersectionedSet.add(setOne.get(x));
+                }
+            }
+        }
+        return intersectionedSet;
     }
 
     public ArrayList<Double> findCompliment(ArrayList<Double>setOne, ArrayList<Double>setTwo){
-        return setOne;
+        ArrayList<Double> complimentSet1 = new ArrayList();
+        boolean inSet;
+
+        for(int x = 0; x < setTwo.size(); x++){
+            inSet = false;
+            for(int y = 0; y < setOne.size(); y++){
+                
+                if(setTwo.get(x).equals(setOne.get(y)))inSet = true;
+            }
+            if(!inSet) complimentSet1.add(setTwo.get(x));
+        }
+        return complimentSet1;
     }
 
     public double findGeometricDistribution(){
@@ -493,8 +516,8 @@ public class StatsLibrary{
         //This repeats, adding numbers to the array list until the user opts out 
         while(bHasMoreInputs){
             System.out.print("You have entered: ");
-            for (int iIterator =0; iIterator < dataSet.size(); iIterator++) System.out.print(dataSet.get(iIterator) + " ,");
-            System.out.println(" so far. Would you like to enter more?\n1) Yes!\n2) No, I'm Done.");
+            for (int iIterator =0; iIterator < dataSet.size(); iIterator++) System.out.print(dataSet.get(iIterator) + ", ");
+            System.out.println("so far. Would you like to enter more?\n1) Yes!\n2) No, I'm Done.");
             userChoice = choiceChecker(1,2);
             if(userChoice == 1) dataSet.add(choiceChecker(-100.0,-100.0));
             if(userChoice == 2) bHasMoreInputs = false;
