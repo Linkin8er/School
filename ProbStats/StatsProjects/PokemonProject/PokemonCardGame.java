@@ -33,6 +33,12 @@ public class PokemonCardGame {
         
     }
 
+    public void gameRounds(){
+        takeTurn(player1, player2);
+        takeTurn(player2, player1);
+        endOfRound();
+    }
+
     public void preGame(){
 
         int playerChoice;
@@ -51,51 +57,48 @@ public class PokemonCardGame {
 
     public void startOfGame(){
 
-        System.out.println(player1.getName() +",draw your opening hand!");
+        System.out.println(player1.getName() +", draw your opening hand!");
         int player1Fails = player1.openingHand(0);
-        System.out.println(player2.getName() +",draw your opening hand");
+        System.out.println(player2.getName() +", draw your opening hand");
         int player2Fails = player2.openingHand(0);
-        System.out.println(player1.getName() +" had " + player1Fails +" mulligans, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
+        System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
         player2.drawCard(player1Fails);
         System.out.println(player2.getName() +" had " + player2Fails +" failed hands, so "+ player1.getName() +" will draw "+player2Fails+" more cards");
         player1.drawCard(player1Fails);
 
     }
 
-    public void gameRounds(){
-        takeTurn(player1);
-        takeTurn(player2);
-        endOfRound();
-    }
-
-    public void takeTurn(PokemonPlayer currentPlayer){
+    public void takeTurn(PokemonPlayer currentPlayer, PokemonPlayer opponent){
 
         currentPlayer.drawCard(1);
+        System.out.println(currentPlayer.getName()+ " you have drawn " + currentPlayer.getHand().get(currentPlayer.getHand().size()-1).getCardName());
         System.out.println(currentPlayer.getName()+", What would you like to do?");
-        System.out.println("1) Play a card\n2) Attack (and end your turn)\n3) Retreat\n4) Use an ability\n5) Check something");
-        int playerChoice = choiceChecker(1, 5);
+        boolean attacked = false;
+        while(!attacked){
+            System.out.println("1) Play a card\n2) Attack (and end your turn)\n3) Retreat\n4) Use an ability\n5) Check something");
+            int playerChoice = choiceChecker(1, 5);
 
-        if (playerChoice == 1) playCard(currentPlayer);
-        if (playerChoice == 2) playCard(currentPlayer);
-        if (playerChoice == 3) retreat();
-        if (playerChoice == 4) playCard(currentPlayer);
-        if (playerChoice == 5) checkStatus();
+            if (playerChoice == 1) playCard(currentPlayer, opponent);
+            if (playerChoice == 2) {
+                attacked = true;
+                
+            };
+            if (playerChoice == 3) retreat();
+            if (playerChoice == 4) playCard(currentPlayer, opponent);
+            if (playerChoice == 5) checkStatus();
+        }
 
     }
 
-    public void playCard(PokemonPlayer currentPlayer){
+    public void playCard(PokemonPlayer currentPlayer, PokemonPlayer opponent){
 
         System.out.println(currentPlayer.getName() +", what card would you like to play?");
         currentPlayer.printHand();
-        int playerChoice = choiceChecker(1, currentPlayer.getHand().size()-1);
-        System.out.println(currentPlayer.getDescription(playerChoice));
+        int playerChoice = choiceChecker(0, currentPlayer.getHand().size()-1);
+        System.out.println(currentPlayer.getHand().get(playerChoice).getCardDescription());
         System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
         int playerChoice2 = choiceChecker(1, 2);
-        if (playerChoice2 == 1) { 
-
-            currentPlayer.playCard(playerChoice);
-            System.out.println("Your active pokemon is now:\n" + currentPlayer.getActivePokemon().getCardDescription());
-        }
+        if (playerChoice2 == 1) { currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent);}
 
     }
 

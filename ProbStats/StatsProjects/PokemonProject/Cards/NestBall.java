@@ -1,6 +1,8 @@
 package Cards;
 
 import java.util.ArrayList;
+
+import Cards.Templates.PokemonCreature;
 import Cards.Templates.PokemonPlayer;
 import Cards.Templates.PokemonTrainer;
 
@@ -8,7 +10,7 @@ public class NestBall extends PokemonTrainer{
     public NestBall(){
 
         cardType = "Trainer";
-        trainerType = "Item";
+        cardSubType = "Item";
         cardName = "Nest Ball";
         cardDescription = "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.";
     }
@@ -27,6 +29,6 @@ public class NestBall extends PokemonTrainer{
         int playerChoice = choiceChecker(0, cardLocations.size());
         int deckLocation = cardLocations.get(playerChoice);
 
-        targetPlayer.getBench().add(targetPlayer.getDeck().remove(deckLocation));
+        targetPlayer.getBench().add((PokemonCreature)targetPlayer.getDeck().remove(deckLocation));
     }
 }

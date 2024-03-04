@@ -2,15 +2,18 @@ package Cards.Templates;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PokemonCard {
+public class PokemonCard implements Playable{
 
     Scanner scaner = new Scanner(System.in);
     protected String cardType;
+    protected String cardSubType;
     protected String cardName;
     protected String cardDescription;
     public String getCardType(){ return cardType;}
+    public String getCardSubType(){ return cardSubType;}
     public String getCardName(){ return cardName;}
     public String getCardDescription(){ return cardDescription;}
+    public void playCard(PokemonPlayer userPlayer, PokemonPlayer opponentPlayer){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //

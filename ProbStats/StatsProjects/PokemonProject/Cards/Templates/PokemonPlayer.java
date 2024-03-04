@@ -10,8 +10,8 @@ public class PokemonPlayer {
     private ArrayList<PokemonCard> hand;
     private ArrayList<PokemonCard> discard;
     private ArrayList<PokemonCard> prizeCards;
-    private PokemonCard activeSpot;
-    private ArrayList<PokemonCard> bench;
+    private PokemonCreature activeSpot;
+    private ArrayList<PokemonCreature> bench;
     private String name;
 
     public PokemonPlayer(){
@@ -51,7 +51,7 @@ public class PokemonPlayer {
 
         boolean hasACreature = false;
         for(int x = 0; x < hand.size()-1; x++){
-            if (hand.get(x).getCardType().equals("Basic Pokemon")) hasACreature = true;
+            if (hand.get(x).getCardSubType().equals("Basic Pokemon")) hasACreature = true;
         }
 
         //if(hasACreature) System.out.println("I got a useable hand!");
@@ -76,13 +76,8 @@ public class PokemonPlayer {
     
     public void printHand(){
         for(int i = 0; i < hand.size()-1; i++){
-            System.out.println((i+1) + ") "+ hand.get(i).getCardName());
+            System.out.println((i) + ") "+ hand.get(i).getCardName());
         }
-    }
-
-    public void playCard(int cardChoice){
-
-        activeSpot = hand.remove(cardChoice-1);
     }
 
     public void setName(String newName){name = newName;}
@@ -99,7 +94,7 @@ public class PokemonPlayer {
     public ArrayList<PokemonCard> getDiscard(){ return discard;}
     public ArrayList<PokemonCard> getPrizePile(){ return prizeCards;}
     public PokemonCard getActivePokemon(){ return activeSpot;}
-    public ArrayList<PokemonCard> getBench(){ return bench;}
+    public ArrayList<PokemonCreature> getBench(){ return bench;}
     public String getName(){ return name;}
     public String getDescription(int card){ return hand.get(card).getCardDescription();}
     

@@ -6,7 +6,7 @@ public class CharmanderOBF extends PokemonCreature{
     public CharmanderOBF(){
 
         cardName = "Charmander (OBF)";
-        cardType = "Basic Pokemon";
+        cardSubType = "Basic Pokemon";
         HP = 60;
 
         attackOneDamage = 30;
