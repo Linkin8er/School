@@ -7,7 +7,7 @@ public class CharmanderPAF extends PokemonCreature{
     public CharmanderPAF(){
 
         cardName = "Charmander (PAF)";
-        cardType = "Basic Pokemon";
+        cardSubType = "Basic Pokemon";
         HP = 70;
 
         attackOneDamage = 0;

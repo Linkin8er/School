@@ -26,9 +26,9 @@ public class PokemonPlayer {
 
         ArrayList<PokemonCard> deckList = new ArrayList<PokemonCard>();
         CharmanderPAF mander = new CharmanderPAF();
-        PokemonEnergy fire = new PokemonEnergy();
+        NestBall notMander = new NestBall();
 
-        for(int i =0; i < (60-pokemonin); i++) {deckList.add(fire);}
+        for(int i =0; i < (60-pokemonin); i++) {deckList.add(notMander);}
         for(int i =0; i < pokemonin; i++) {deckList.add(mander);}
 
         Collections.shuffle(deckList);
@@ -41,6 +41,22 @@ public class PokemonPlayer {
         CharmanderOBF mander2 = new CharmanderOBF();
         for(int i =0; i < 30; i++) {deck.add(mander1);}
         for(int i =0; i < 30; i++) {deck.add(mander2);}
+    }
+    public void createTestDeck(){
+
+        CharmanderPAF mander1 = new CharmanderPAF();
+        CharmanderOBF mander2 = new CharmanderOBF();
+        NestBall pokeBall = new NestBall();
+        ProfessorOaksResearch research = new ProfessorOaksResearch();
+        RareCandy candy = new RareCandy();
+        FireEnergy energies = new FireEnergy();
+
+        for(int i =0; i < 10; i++) {deck.add(mander1);}
+        for(int i =0; i < 10; i++) {deck.add(mander2);}
+        for(int i =0; i < 10; i++) {deck.add(pokeBall);}
+        for(int i =0; i < 10; i++) {deck.add(research);}
+        for(int i =0; i < 10; i++) {deck.add(candy);}
+        for(int i =0; i < 10; i++) {deck.add(energies);}
     }
     
     public int openingHand(int redraws){
@@ -75,7 +91,7 @@ public class PokemonPlayer {
     }
     
     public void printHand(){
-        for(int i = 0; i < hand.size()-1; i++){
+        for(int i = 0; i < hand.size(); i++){
             System.out.println((i) + ") "+ hand.get(i).getCardName());
         }
     }

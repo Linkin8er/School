@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class PokemonCard implements Playable{
 
     Scanner scaner = new Scanner(System.in);
-    protected String cardType;
-    protected String cardSubType;
-    protected String cardName;
-    protected String cardDescription;
+    protected String cardType = "placeholder";
+    protected String cardSubType= "placeholder";
+    protected String cardName= "placeholder";
+    protected String cardDescription= "placeholder";
     public String getCardType(){ return cardType;}
     public String getCardSubType(){ return cardSubType;}
     public String getCardName(){ return cardName;}

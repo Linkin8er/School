@@ -42,16 +42,18 @@ public class PokemonCardGame {
     public void preGame(){
 
         int playerChoice;
-        System.out.println(player1.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode");
-        playerChoice = choiceChecker(1,4);
+        System.out.println(player1.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode\n5) Test");
+        playerChoice = choiceChecker(1,5);
 
         if (playerChoice == 1) player1.createCharizardDeck();
+        if (playerChoice == 5) player1.createTestDeck();
         player1.createPrizePile();
 
-        System.out.println("\n" + player2.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode");
-        playerChoice = choiceChecker(1,4);
+        System.out.println("\n" + player2.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode\n5) Test");
+        playerChoice = choiceChecker(1,5);
 
         if (playerChoice == 1) player2.createCharizardDeck();
+        if (playerChoice == 5) player2.createTestDeck();
         player2.createPrizePile();
     }
 

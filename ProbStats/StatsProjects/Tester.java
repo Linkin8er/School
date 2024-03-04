@@ -3,11 +3,11 @@ public class Tester {
 
         //StatsLibrary statsTester = new StatsLibrary();
         PokemonCardGame testGame = new PokemonCardGame();
-        MonteCarloPokeTester test = new MonteCarloPokeTester(15);
+        //MonteCarloPokeTester test = new MonteCarloPokeTester(15);
         
-        //testGame.preGame();
-        //testGame.startOfGame();
-        //testGame.gameRounds();
+        testGame.preGame();
+        testGame.startOfGame();
+        testGame.gameRounds();
 
         //statsTester.operationPicker();
     }
