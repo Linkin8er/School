@@ -1,0 +1,19 @@
+package Cards;
+
+import Cards.Templates.PokemonPlayer;
+import Cards.Templates.PokemonTrainer;
+
+public class ProfessorOaksResearch extends PokemonTrainer{
+    public ProfessorOaksResearch(){
+        cardType = "Trainer";
+        trainerType = "Supporter";
+        cardName = "Proffesor Oak's Research";
+        cardDescription = "Discard your hand and draw 7 cards.";
+    }
+    public void playAction(PokemonPlayer targetPlayer){
+        for(int i = 0; i <targetPlayer.getHand().size(); i++){
+            targetPlayer.getDiscard().add(targetPlayer.getHand().remove(i));
+        }
+        targetPlayer.drawCard(7);
+    }
+}

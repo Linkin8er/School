@@ -1,6 +1,6 @@
 package Cards;
 
-import Cards.CardTemplates.PokemonCreature;
+import Cards.Templates.PokemonCreature;
 
 public class CharmanderOBF extends PokemonCreature{
     public CharmanderOBF(){

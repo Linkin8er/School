@@ -1,5 +1,6 @@
 import java.util.Scanner;
-import Cards.CardTemplates.*;
+
+import Cards.Templates.*;
 
 public class PokemonCardGame {
 
@@ -26,7 +27,7 @@ public class PokemonCardGame {
         preGame();
         startOfGame();
 
-        while(player1.getPrizeSize() > 0 && player2.getPrizeSize() > 0){
+        while(player1.getPrizePile().size() > 0 && player2.getPrizePile().size() > 0){
             gameRounds();
         }
         
@@ -86,7 +87,7 @@ public class PokemonCardGame {
 
         System.out.println(currentPlayer.getName() +", what card would you like to play?");
         currentPlayer.printHand();
-        int playerChoice = choiceChecker(1, currentPlayer.getHandSize()-1);
+        int playerChoice = choiceChecker(1, currentPlayer.getHand().size()-1);
         System.out.println(currentPlayer.getDescription(playerChoice));
         System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
         int playerChoice2 = choiceChecker(1, 2);

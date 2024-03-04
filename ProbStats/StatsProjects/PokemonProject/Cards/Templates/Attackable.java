@@ -1,4 +1,4 @@
-package Cards.CardTemplates;
+package Cards.Templates;
 
 public interface Attackable {
     void attackOne(PokemonCreature target);

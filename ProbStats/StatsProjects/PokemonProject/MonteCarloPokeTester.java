@@ -1,3 +1,5 @@
+import Cards.Templates.PokemonPlayer;
+
 public class MonteCarloPokeTester {
 
     public MonteCarloPokeTester(int numPokemon){

@@ -1,8 +1,8 @@
+package Cards.Templates;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import Cards.*;
-import Cards.CardTemplates.*;
 
 public class PokemonPlayer {
 
@@ -94,11 +94,15 @@ public class PokemonPlayer {
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
 
-    public int getHandSize(){ return hand.size();}
-    public String getName(){ return name;}
-    public int getPrizeSize(){return prizeCards.size();}
-    public String getDescription(int card){ return hand.get(card).getCardDescription();}
+    public ArrayList<PokemonCard> getDeck(){ return deck;}
+    public ArrayList<PokemonCard> getHand(){ return hand;}
+    public ArrayList<PokemonCard> getDiscard(){ return discard;}
+    public ArrayList<PokemonCard> getPrizePile(){ return prizeCards;}
     public PokemonCard getActivePokemon(){ return activeSpot;}
+    public ArrayList<PokemonCard> getBench(){ return bench;}
+    public String getName(){ return name;}
+    public String getDescription(int card){ return hand.get(card).getCardDescription();}
+    
     
 
 }

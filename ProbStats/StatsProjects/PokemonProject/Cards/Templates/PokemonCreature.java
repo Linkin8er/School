@@ -1,4 +1,4 @@
-package Cards.CardTemplates;
+package Cards.Templates;
 import java.util.ArrayList;
 
 public class PokemonCreature extends PokemonCard implements Attackable{
