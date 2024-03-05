@@ -104,6 +104,7 @@ public class PokemonPlayer {
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
+    public void discardCard(PokemonCard card){ discard.add(card);}
 
     public ArrayList<PokemonCard> getDeck(){ return deck;}
     public ArrayList<PokemonCard> getHand(){ return hand;}

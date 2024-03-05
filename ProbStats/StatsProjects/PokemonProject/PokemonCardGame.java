@@ -100,7 +100,11 @@ public class PokemonCardGame {
         System.out.println(currentPlayer.getHand().get(playerChoice).getCardDescription());
         System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
         int playerChoice2 = choiceChecker(1, 2);
-        if (playerChoice2 == 1) { currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent);}
+        
+        if (playerChoice2 == 1) { 
+            currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent);
+            currentPlayer.discardCard(currentPlayer.getHand().remove(playerChoice));
+        }
 
     }
 
