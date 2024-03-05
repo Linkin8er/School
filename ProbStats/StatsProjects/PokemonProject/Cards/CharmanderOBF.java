@@ -5,6 +5,7 @@ import Cards.Templates.PokemonCreature;
 public class CharmanderOBF extends PokemonCreature{
     public CharmanderOBF(){
 
+        retreatCost = 1;
         cardName = "Charmander (OBF)";
         cardSubType = "Basic Pokemon";
         HP = 60;

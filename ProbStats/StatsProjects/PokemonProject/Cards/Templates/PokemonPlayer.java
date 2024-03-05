@@ -42,7 +42,7 @@ public class PokemonPlayer {
         for(int i =0; i < 30; i++) {deck.add(mander1);}
         for(int i =0; i < 30; i++) {deck.add(mander2);}
     }
-    public void createTestDeck(){
+    public void createTestDeck(int numCandies){
 
         CharmanderPAF mander1 = new CharmanderPAF();
         CharmanderOBF mander2 = new CharmanderOBF();
@@ -55,8 +55,8 @@ public class PokemonPlayer {
         for(int i =0; i < 10; i++) {deck.add(mander2);}
         for(int i =0; i < 10; i++) {deck.add(pokeBall);}
         for(int i =0; i < 10; i++) {deck.add(research);}
-        for(int i =0; i < 10; i++) {deck.add(candy);}
-        for(int i =0; i < 10; i++) {deck.add(energies);}
+        for(int i =0; i < numCandies; i++) {deck.add(candy);}
+        for(int i =0; i < 20-numCandies; i++) {deck.add(energies);}
     }
     
     public int openingHand(int redraws){
@@ -96,6 +96,12 @@ public class PokemonPlayer {
         }
     }
 
+    public void printBench(){
+        for(int i = 0; i < bench.size(); i++){
+            System.out.println((i) + ") "+ bench.get(i).getCardName());
+        }
+    }
+
     public void setName(String newName){name = newName;}
     public void createPrizePile(){for(int i =0; i < 6; i++) {prizeCards.add(deck.remove(deck.size()-1));}}
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
@@ -104,13 +110,14 @@ public class PokemonPlayer {
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
+    public void returnPrizePile(){ for(int i =0; i < prizeCards.size(); i++) {deck.add(prizeCards.remove(i));}}
     public void discardCard(PokemonCard card){ discard.add(card);}
 
     public ArrayList<PokemonCard> getDeck(){ return deck;}
     public ArrayList<PokemonCard> getHand(){ return hand;}
     public ArrayList<PokemonCard> getDiscard(){ return discard;}
     public ArrayList<PokemonCard> getPrizePile(){ return prizeCards;}
-    public PokemonCard getActivePokemon(){ return activeSpot;}
+    public PokemonCreature getActivePokemon(){ return activeSpot;}
     public ArrayList<PokemonCreature> getBench(){ return bench;}
     public String getName(){ return name;}
     public String getDescription(int card){ return hand.get(card).getCardDescription();}

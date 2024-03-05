@@ -10,7 +10,8 @@ public class ProfessorOaksResearch extends PokemonTrainer{
         cardName = "Proffesor Oak's Research";
         cardDescription = "Discard your hand and draw 7 cards.";
     }
-    public void playCard(PokemonPlayer targetPlayer, PokemonPlayer opponent){
+    public void playCard(PokemonPlayer targetPlayer, PokemonPlayer opponent, int locationInHand){
+        targetPlayer.discardCard(targetPlayer.getHand().remove(locationInHand));
         for(int i = 0; i <targetPlayer.getHand().size(); i++){
             targetPlayer.getDiscard().add(targetPlayer.getHand().remove(i));
         }

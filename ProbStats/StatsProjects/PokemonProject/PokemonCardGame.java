@@ -46,14 +46,14 @@ public class PokemonCardGame {
         playerChoice = choiceChecker(1,5);
 
         if (playerChoice == 1) player1.createCharizardDeck();
-        if (playerChoice == 5) player1.createTestDeck();
+        if (playerChoice == 5) player1.createTestDeck(10);
         player1.createPrizePile();
 
         System.out.println("\n" + player2.getName() +", which deck would you like:\n1) Charizard Flames\n2) Snorlax Stall\n3) Mew Genesect Madness\n4) Arceus Godmode\n5) Test");
         playerChoice = choiceChecker(1,5);
 
         if (playerChoice == 1) player2.createCharizardDeck();
-        if (playerChoice == 5) player2.createTestDeck();
+        if (playerChoice == 5) player2.createTestDeck(10);
         player2.createPrizePile();
     }
 
@@ -82,11 +82,11 @@ public class PokemonCardGame {
 
             if (playerChoice == 1) playCard(currentPlayer, opponent);
             if (playerChoice == 2) {
-                attacked = true;
                 
+                attacked = true;    
             };
             if (playerChoice == 3) retreat();
-            if (playerChoice == 4) playCard(currentPlayer, opponent);
+            if (playerChoice == 4) System.out.println("No");
             if (playerChoice == 5) checkStatus();
         }
 
@@ -94,16 +94,26 @@ public class PokemonCardGame {
 
     public void playCard(PokemonPlayer currentPlayer, PokemonPlayer opponent){
 
-        System.out.println(currentPlayer.getName() +", what card would you like to play?");
-        currentPlayer.printHand();
-        int playerChoice = choiceChecker(0, currentPlayer.getHand().size()-1);
-        System.out.println(currentPlayer.getHand().get(playerChoice).getCardDescription());
-        System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
-        int playerChoice2 = choiceChecker(1, 2);
+        boolean wantsToPlay = true;
+        while(wantsToPlay){
+
+            System.out.println(currentPlayer.getName() +", what card would you like to play?");
+            currentPlayer.printHand(); 
+            System.out.println(currentPlayer.getHand().size()+") Go back");
+            int playerChoice = choiceChecker(0, currentPlayer.getHand().size());
+
+            if (playerChoice == currentPlayer.getHand().size()){ wantsToPlay = false;}
+            else{
+
+                System.out.println(currentPlayer.getHand().get(playerChoice).getCardDescription());
+                System.out.println("Are you sure you want to play this card?\n1) yes\n2) no");
+                int playerChoice2 = choiceChecker(1, 2);
         
-        if (playerChoice2 == 1) { 
-            currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent);
-            currentPlayer.discardCard(currentPlayer.getHand().remove(playerChoice));
+                if (playerChoice2 == 1) { 
+                    currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent, playerChoice);
+                    wantsToPlay = false;
+                }
+            }
         }
 
     }
@@ -113,7 +123,7 @@ public class PokemonCardGame {
     }
 
     public void checkStatus(){
-
+        System.out.println("No");
     }
 
     public void endOfRound(){

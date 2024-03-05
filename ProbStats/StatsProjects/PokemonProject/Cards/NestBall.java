@@ -15,7 +15,7 @@ public class NestBall extends PokemonTrainer{
         cardDescription = "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.";
     }
     
-    public void playCard(PokemonPlayer targetPlayer, PokemonPlayer opponent){
+    public void playCard(PokemonPlayer targetPlayer, PokemonPlayer opponent, int locationInHand){
 
         ArrayList<Integer> cardLocations = new ArrayList();
         for(int i = 0; i < targetPlayer.getDeck().size(); i++){
@@ -30,5 +30,7 @@ public class NestBall extends PokemonTrainer{
         int deckLocation = cardLocations.get(playerChoice);
 
         targetPlayer.getBench().add((PokemonCreature)targetPlayer.getDeck().remove(deckLocation));
+        targetPlayer.shuffleDeck();
+        targetPlayer.discardCard(targetPlayer.getHand().remove(locationInHand));
     }
 }
