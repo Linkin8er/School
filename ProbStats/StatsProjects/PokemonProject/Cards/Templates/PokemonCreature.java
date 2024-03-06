@@ -34,8 +34,12 @@ public class PokemonCreature extends PokemonCard implements Attackable, Playable
     public void attachEnergy(PokemonEnergy energy){attachedEnergies.add(energy);}
 
     public void playCard(PokemonPlayer userPlayer, PokemonPlayer opponentPlayer, int locationInHand){
-        if(userPlayer.getBench().size() > 5){ System.out.println("Your bench if full!"); }
-        else{ userPlayer.getBench().add((PokemonCreature)userPlayer.getHand().remove(locationInHand));
+        if(!userPlayer.getBench().isEmpty()){
+            if(userPlayer.getBench().size() > 5){ System.out.println("Your bench if full!"); }
+            else userPlayer.getBench().add((PokemonCreature)userPlayer.getHand().remove(locationInHand));
+        }
+        else{ 
+            userPlayer.getBench().add((PokemonCreature)userPlayer.getHand().remove(locationInHand));
         }
     }
     public boolean checkEnergies(String energyTypeNeeded, int countNeeded){

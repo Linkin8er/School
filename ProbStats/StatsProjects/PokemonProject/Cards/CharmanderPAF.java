@@ -21,7 +21,7 @@ public class CharmanderPAF extends PokemonCreature{
         attackTwoCost = "Two Fire Energies";
         attackTwoDescription = "Attack Two: "+attackTwoName+" deals " + attackTwoDamage + " damage.\nIt costs 2 energy";
 
-        cardDescription = "Name: "+cardName+"\nCard type:"+cardType+"\nCurrent HP: "+HP+"\n"+attackOneDescription+"\n"+attackTwoDescription;
+        cardDescription = "Name: "+cardName+", Card type:"+cardType+", Current HP: "+HP+", "+attackOneDescription+", "+attackTwoDescription;
 
     }
     public void attackOne(PokemonCreature target){

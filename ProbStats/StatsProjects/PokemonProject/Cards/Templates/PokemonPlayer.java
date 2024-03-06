@@ -1,11 +1,13 @@
 package Cards.Templates;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 import Cards.*;
 
 public class PokemonPlayer {
 
+    Scanner scan = new Scanner(System.in);
     private ArrayList<PokemonCard> deck;
     private ArrayList<PokemonCard> hand;
     private ArrayList<PokemonCard> discard;
@@ -19,7 +21,9 @@ public class PokemonPlayer {
         name = "PlaceHolder";
         deck = new ArrayList<PokemonCard>();
         hand = new ArrayList<PokemonCard>();
+        discard = new ArrayList<PokemonCard>();
         prizeCards = new ArrayList<PokemonCard>();
+        bench = new ArrayList<PokemonCreature>();
     }
 
     public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
@@ -93,12 +97,80 @@ public class PokemonPlayer {
     public void printHand(){
         for(int i = 0; i < hand.size(); i++){
             System.out.println((i) + ") "+ hand.get(i).getCardName());
+            System.out.println("    " + hand.get(i).getCardDescription());
         }
     }
 
     public void printBench(){
         for(int i = 0; i < bench.size(); i++){
             System.out.println((i) + ") "+ bench.get(i).getCardName());
+            System.out.println("    " + bench.get(i).getCardDescription());
+        }
+    }
+
+    public void printBoard(){
+        System.out.println(name + "'s Active Pokemon:");
+        System.out.println(activeSpot.getCardName());
+        System.out.println("    "+ activeSpot.getCardDescription());
+
+        System.out.println(name + "'s Benched Pokemon:");
+        if(!bench.isEmpty()){
+            for(int i = 0; i < bench.size(); i++){
+                System.out.println((i) + ") "+ bench.get(i).getCardName());
+                System.out.println("    " + bench.get(i).getCardDescription());
+            }
+        }
+        else System.out.println("No benched pokemon!");
+    }
+
+    public void setField(){
+
+        System.out.println(name +"Time to set up!");
+        boolean fieldSet = false;
+        boolean activeSlotFilled = false;
+
+        while(!fieldSet){
+
+            ArrayList<Integer> cardLocation = new ArrayList();
+
+            for(int i = 0; i < hand.size(); i++){
+                if(hand.get(i).getCardSubType().equals("Basic Pokemon")){
+                    cardLocation.add(i);
+                }
+            }
+
+            int placeInHand;
+            if(!activeSlotFilled){
+                System.out.println("First, which pokemon would you like in your active slot?");
+                for(int x = 0; x < cardLocation.size(); x++){
+                    placeInHand = cardLocation.get(x);
+                    System.out.println((x) + ") "+ hand.get(placeInHand).getCardName());
+                }
+                int playerChoice = choiceChecker(0, cardLocation.size()-1);
+                placeInHand = cardLocation.get(playerChoice);
+                activeSpot = (PokemonCreature)hand.remove(placeInHand);
+                activeSlotFilled = true;
+            } 
+            else if (!cardLocation.isEmpty()){
+                System.out.println("What pokemon would you like on your bench?");
+                for(int x = 0; x < cardLocation.size(); x++){
+                    placeInHand = cardLocation.get(x);
+                    System.out.println((x) + ") "+ hand.get(placeInHand).getCardName());
+                }
+                System.out.println(cardLocation.size() + ") End Setup");
+                int playerChoice = choiceChecker(0, cardLocation.size());
+                if(playerChoice < cardLocation.size()){
+                    placeInHand = cardLocation.get(playerChoice);
+                    bench.add((PokemonCreature)hand.remove(placeInHand));
+                } 
+                else{
+                    fieldSet = true;
+                }
+            } 
+            else {
+                System.out.println("You have no more pokemon to set!");
+                fieldSet = true;
+            }
         }
     }
 
@@ -122,6 +194,40 @@ public class PokemonPlayer {
     public String getName(){ return name;}
     public String getDescription(int card){ return hand.get(card).getCardDescription();}
     
-    
+
+    public int choiceChecker(int nLowerBounds, int nUpperBounds)
+    {
+        String userInputString = "";
+        int userInputInt = 0;
+        boolean userCompliance = false;
+        Boolean noBounds = false;
+        //This try block is used to not only make sure that the user enters a number, but also that the number follows the set parameters
+        while(!userCompliance)
+        {
+            userInputInt = 0;
+            try
+            {
+                //If the upper and lower bounds are both -100, then that indicates that we don't have any bounds, as -100 should never end up being the real bounds
+                if(nLowerBounds == -100 && nUpperBounds == -100) noBounds = true;
+                if(noBounds) System.out.println("Please enter an integer");
+                else System.out.println("Please enter an integer from " + nLowerBounds + " to " + nUpperBounds+ ".");
+                //This set is used to make sure the user enters an integer. If i cal for an integer and they input anything else, the program keeps breaking
+                //This way, I can call for a string, and then just change it into an int. If that doesn't work, then I can handle it and work from there.
+                userInputString = scan.nextLine();
+                userInputInt = Integer.parseInt(userInputString);
+                //This here is the base case for this
+                if((userInputInt >= nLowerBounds && userInputInt <= nUpperBounds) || (noBounds)) userCompliance = true;
+                //This else will run if the user enters a number that is outside the bounds in which case it uses recursion until the user complies
+                else System.out.println("That was not within the bounds");
+            }
+            //This catch is to make sure the user enters an integer
+            //If they don't, it will use recursion until they do
+            catch (NumberFormatException exception)
+            {
+                System.out.println("Please enter a proper number next time.");
+            }
+        }        
+        return userInputInt;
+    }    
 
 }

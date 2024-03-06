@@ -63,11 +63,23 @@ public class PokemonCardGame {
         int player1Fails = player1.openingHand(0);
         System.out.println(player2.getName() +", draw your opening hand");
         int player2Fails = player2.openingHand(0);
-        System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
-        player2.drawCard(player1Fails);
-        System.out.println(player2.getName() +" had " + player2Fails +" failed hands, so "+ player1.getName() +" will draw "+player2Fails+" more cards");
-        player1.drawCard(player1Fails);
 
+        if(player2Fails>player1Fails){
+
+            player1.setField();
+            System.out.println(player2.getName() +" had " + player2Fails +" more failed hands, so "+ player1.getName() +" will draw "+player2Fails+" more cards");
+            player1.drawCard(player2Fails);
+        }
+        else if(player2Fails<player1Fails){
+
+            player2.setField();
+            System.out.println(player1.getName() +" had " + player1Fails +" failed hands, so "+ player2.getName() +" will draw "+player1Fails+" more cards");
+            player2.drawCard(player1Fails);
+        }
+        else{
+            player1.setField();
+            player2.setField();
+        }
     }
 
     public void takeTurn(PokemonPlayer currentPlayer, PokemonPlayer opponent){
@@ -77,17 +89,17 @@ public class PokemonCardGame {
         System.out.println(currentPlayer.getName()+", What would you like to do?");
         boolean attacked = false;
         while(!attacked){
-            System.out.println("1) Play a card\n2) Attack (and end your turn)\n3) Retreat\n4) Use an ability\n5) Check something");
-            int playerChoice = choiceChecker(1, 5);
+            System.out.println("1) Play a card\n2) Attack (and end your turn)\n3) Retreat\n4) Use an ability\n5) Check something\n6) End Turn");
+            int playerChoice = choiceChecker(1, 6);
 
             if (playerChoice == 1) playCard(currentPlayer, opponent);
             if (playerChoice == 2) {
                 
-                attacked = true;    
-            };
+                attacked = true;}
             if (playerChoice == 3) retreat();
             if (playerChoice == 4) System.out.println("No");
-            if (playerChoice == 5) checkStatus();
+            if (playerChoice == 5) checkStatus(currentPlayer, opponent);
+            if (playerChoice == 6) {attacked = true;}
         }
 
     }
@@ -110,6 +122,7 @@ public class PokemonCardGame {
                 int playerChoice2 = choiceChecker(1, 2);
         
                 if (playerChoice2 == 1) { 
+                    System.out.println("I tried to play" + currentPlayer.getHand().get(playerChoice));
                     currentPlayer.getHand().get(playerChoice).playCard(currentPlayer, opponent, playerChoice);
                     wantsToPlay = false;
                 }
@@ -118,12 +131,24 @@ public class PokemonCardGame {
 
     }
 
+    public void attack(PokemonPlayer currentPlayer, PokemonPlayer opponent){
+        System.out.println(currentPlayer.getName() +", what attack would you like to use?");
+
+    }
+
     public void retreat(){
 
     }
 
-    public void checkStatus(){
-        System.out.println("No");
+    public void checkStatus(PokemonPlayer currentPlayer, PokemonPlayer opponent){
+
+        System.out.println("What would you like to check?");
+        System.out.println("1) Your board\n2) Opponent board\n3) Cards in hand\n4) Cancel");
+        int playerChoice = choiceChecker(1,4);
+        if(playerChoice == 1) currentPlayer.printBoard();
+        if(playerChoice == 2) opponent.printBoard();
+        if(playerChoice == 3) currentPlayer.printHand();
+
     }
 
     public void endOfRound(){

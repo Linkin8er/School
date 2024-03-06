@@ -12,19 +12,20 @@ public class CharmanderOBF extends PokemonCreature{
 
         attackOneDamage = 30;
         attackOneName = "Heat Tackle";
-        attackOneDescription = "Attack One: "+attackOneName+" deals " + attackOneDamage + " damage.\nIt costs 1 energy and deals 10 damage to itself.";
+        attackOneDescription = "Attack One: "+attackOneName+" deals " + attackOneDamage + " damage. It costs 1 energy and deals 10 damage to itself.";
 
         attackTwoDamage = 0;
         attackTwoName = "";
         attackTwoDescription = "No second attack";
 
-        cardDescription = "Name: "+cardName+"\nCard type:"+cardType+"\nCurrent HP: "+HP+"\n"+attackOneDescription+"\n"+attackTwoDescription;
+        cardDescription = "Name: "+cardName+", Card type:"+cardType+", Current HP: "+HP+", "+attackOneDescription+", "+attackTwoDescription;
 
     }
     public void attackOne(PokemonCreature target){
-
-        target.takeDamage(attackOneDamage);
-        HP = HP - 10;
+        if(checkEnergies("fire", 1)){
+            target.takeDamage(attackOneDamage);
+            HP = HP - 10;
+        }
     }
     
     public void attackTwo(PokemonCreature target){}
