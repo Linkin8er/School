@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import Cards.*;
 
+//This is the class that does allot of the heavy lifting, though rules are mostly handled in the game class
 public class PokemonPlayer {
 
     Scanner scan = new Scanner(System.in);
@@ -26,7 +27,10 @@ public class PokemonPlayer {
         bench = new ArrayList<PokemonCreature>();
     }
 
+    //This method is specifically used for the Monte Carlo pokemon probability project
+    //using pokemin, you can input the number of pokemon to include in the deck
     public ArrayList<PokemonCard> createDeckMonteTest(int pokemonin){
+
 
         ArrayList<PokemonCard> deckList = new ArrayList<PokemonCard>();
         CharmanderPAF mander = new CharmanderPAF();
@@ -40,12 +44,15 @@ public class PokemonPlayer {
         return deckList;
     }
 
+    //This was going to be a competative deck focusing on Charizard
     public void createCharizardDeck(){
         CharmanderPAF mander1 = new CharmanderPAF();
         CharmanderOBF mander2 = new CharmanderOBF();
         for(int i =0; i < 30; i++) {deck.add(mander1);}
         for(int i =0; i < 30; i++) {deck.add(mander2);}
     }
+    
+    //This deck is a standard deck with a variety of cards used for testing
     public void createTestDeck(int numCandies){
 
         CharmanderPAF mander1 = new CharmanderPAF();
@@ -55,14 +62,16 @@ public class PokemonPlayer {
         RareCandy candy = new RareCandy();
         FireEnergy energies = new FireEnergy();
 
-        for(int i =0; i < 10; i++) {deck.add(mander1);}
-        for(int i =0; i < 10; i++) {deck.add(mander2);}
-        for(int i =0; i < 10; i++) {deck.add(pokeBall);}
+        for(int i =0; i < 5; i++) {deck.add(mander1);}
+        for(int i =0; i < 13; i++) {deck.add(mander2);}
+        for(int i =0; i < 7; i++) {deck.add(pokeBall);}
         for(int i =0; i < 10; i++) {deck.add(research);}
         for(int i =0; i < numCandies; i++) {deck.add(candy);}
-        for(int i =0; i < 20-numCandies; i++) {deck.add(energies);}
+        for(int i =0; i < 25-numCandies; i++) {deck.add(energies);}
     }
     
+    //This method goes though and uses recursion to find the total number of redraws needed to get a hand with at least 1 basic pokemon
+    //It returns the final number of draws needed
     public int openingHand(int redraws){
 
         //System.out.println("opening hand is drawn");
@@ -84,16 +93,7 @@ public class PokemonPlayer {
         return redraws;
     }
     
-    public int getPokemonCount(){ 
-        int pokemonCards = 0;
-        for(int i = 0; i < deck.size(); i++){
-            if(deck.get(i).getCardType().equals("Pokemon") || deck.get(i).getCardType().equals("Basic Pokemon")){
-                pokemonCards++;
-            }
-        }
-        return pokemonCards;
-    }
-    
+    //This method is used simply to print the player's hand
     public void printHand(){
         for(int i = 0; i < hand.size(); i++){
             System.out.println((i) + ") "+ hand.get(i).getCardName());
@@ -101,28 +101,36 @@ public class PokemonPlayer {
         }
     }
 
+    //Similar to the last method, this prints the bench
     public void printBench(){
-        for(int i = 0; i < bench.size(); i++){
-            System.out.println((i) + ") "+ bench.get(i).getCardName());
-            System.out.println("    " + bench.get(i).getCardDescription());
-        }
-    }
 
-    public void printBoard(){
-        System.out.println(name + "'s Active Pokemon:");
-        System.out.println(activeSpot.getCardName());
-        System.out.println("    "+ activeSpot.getCardDescription());
-
-        System.out.println(name + "'s Benched Pokemon:");
-        if(!bench.isEmpty()){
+        if(bench.isEmpty()) System.out.println("No bench!");
+        else{
             for(int i = 0; i < bench.size(); i++){
                 System.out.println((i) + ") "+ bench.get(i).getCardName());
                 System.out.println("    " + bench.get(i).getCardDescription());
             }
         }
-        else System.out.println("No benched pokemon!");
     }
 
+    //This is used to print the active pokemon, prize pile, and board
+    public void printBoard(){
+        System.out.println(name + "'s Active Pokemon:");
+        System.out.println(activeSpot.getCardName());
+        System.out.println(activeSpot.getCardDescription());
+
+        System.out.println(name + "'s Benched Pokemon:");
+        if(!bench.isEmpty()){
+            for(int i = 0; i < bench.size(); i++){
+                System.out.println((i) + ") "+ bench.get(i).getCardName());
+                System.out.println(bench.get(i).getCardDescription());
+            }
+        }
+        else System.out.println("No benched pokemon!");
+        System.out.println(name + " has " + prizeCards.size() + " prize cards remaining");
+    }
+
+    //This is used at the beginning when setting up the player board at the beginning of the game
     public void setField(){
 
         System.out.println(name +"Time to set up!");
@@ -174,27 +182,29 @@ public class PokemonPlayer {
         }
     }
 
+    //The rest of these tend to be basic setters/getters
     public void setName(String newName){name = newName;}
     public void createPrizePile(){for(int i =0; i < 6; i++) {prizeCards.add(deck.remove(deck.size()-1));}}
     public void removeDeck(){ if(!(deck.isEmpty())) deck.clear(); }
-    
     public void drawCard(int numToDraw){ for(int i = 0; i < numToDraw; i++) {hand.add(deck.remove(deck.size()-1));}}
+    public void drawCard(PokemonCard drawnCard){ hand.add(drawnCard);}
     public void createDeck(ArrayList<PokemonCard> deckList){deck = deckList;}
     public void shuffleDeck(){ Collections.shuffle(deck);}
     public void returnHandToDeck(){ for(int i =0; i < hand.size(); i++) {deck.add(hand.remove(hand.size()-1));}}
     public void returnPrizePile(){ for(int i =0; i < prizeCards.size(); i++) {deck.add(prizeCards.remove(i));}}
     public void discardCard(PokemonCard card){ discard.add(card);}
-
     public ArrayList<PokemonCard> getDeck(){ return deck;}
     public ArrayList<PokemonCard> getHand(){ return hand;}
     public ArrayList<PokemonCard> getDiscard(){ return discard;}
     public ArrayList<PokemonCard> getPrizePile(){ return prizeCards;}
     public PokemonCreature getActivePokemon(){ return activeSpot;}
+    public void setActivePokemon(PokemonCreature newActive){activeSpot = newActive;}
     public ArrayList<PokemonCreature> getBench(){ return bench;}
     public String getName(){ return name;}
     public String getDescription(int card){ return hand.get(card).getCardDescription();}
     
 
+    //This is the choice checker I made a long while ago that I frequently re-use
     public int choiceChecker(int nLowerBounds, int nUpperBounds)
     {
         String userInputString = "";

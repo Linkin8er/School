@@ -66,13 +66,28 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
 
-//This just runs the stats wizard
+/**
+ * This is my stats library for 2024 Spring stats class
+ * Curently includes: 
+ * set operations
+ * mean, median, mode
+ * standard deviation
+ * permutation
+ * combination
+ * Binomial distribution (PMF, μ, σ^2, σ)
+ * Geometric distribution(PMF, μ, σ^2, σ)
+ * Hypergeometric distribution(PMF, μ, σ^2, σ)
+ */
 public class StatsLibrary{
 
     private double userChoice;
     Scanner scan = new Scanner(System.in); 
 
-    //This method runs a loop that calls other methods depending on what the user needs to do
+    /**
+     * This method runs a loop that calls other methods depending on what the user needs to do
+     * Also it calles whatever method is needed to preempt the needed function
+     * This includes things like making the needed lists for set operations
+     */
     public void operationPicker(){
         boolean wantsToContinue = true;
         while(wantsToContinue)
@@ -81,7 +96,7 @@ public class StatsLibrary{
             userChoice = choiceChecker(1,11);
             if(userChoice == 1) setOperations();
             if(userChoice == 2) System.out.println("The mean of your data set is "+ (findMean(listMaker()))+"!\n");
-            if(userChoice == 3) System.out.println("The median of your data set is "+ (findMedian(listSorter(listMaker()))+"!\n"));
+            if(userChoice == 3) System.out.println("The median of your data set is "+ (findMedian(listMaker())+"!\n"));
             if(userChoice == 4) System.out.println("The mode of your data set is "+ (findMode(listMaker()))+"!\n");
             if(userChoice == 5) System.out.println("The Standard Deviation of the set is: "+ standardDeviationCalculator(listMaker()));
             if(userChoice == 6) System.out.println("The total permutations would be " + findPermutation(0, 0)+ "!\n");
@@ -94,7 +109,12 @@ public class StatsLibrary{
         System.out.println("\n\nHave a great day!");
     }
 
-    //This just runs a for loop to multiply a number by each whole number less than it greater than 0(factorial!).
+    /**
+     * This just runs a for loop to multiply a number by each whole number less than it greater than 0
+     * (factorial!)
+     * @param x The number to be factored
+     * @return Returns the factorial as a BigInteger (Some get quite large)
+     */
     public BigInteger factorialB(int x){
         BigInteger xFactorialB = BigInteger.valueOf(1);
         for (int i = x; i > 0; i--){
@@ -104,7 +124,12 @@ public class StatsLibrary{
         return xFactorialB;
     }
 
-    //THIS DOES NOT WORK FOR BIG NUMBERS
+    /**
+     * This also finds the factorail, same as factorialB. 
+     * As it returns a long however, there is a decent chance the numbers get too big and it does not work
+     * @param x The number to be factored
+     * @return Returns the factorial as a long
+     */
     public long factorialL(int x){
         
         long xFactorialL = 1;
@@ -115,7 +140,12 @@ public class StatsLibrary{
         return xFactorialL;
     }
     
-    //This goes through and has the user make a set of lists before performing an operation on them. 
+    /**
+     * This is used to select set operations to perform
+     * performs:
+     * Union, Intersection, and Compliment
+     * This also handles the creation of the sets that are to be used
+     */
     public void setOperations(){
         System.out.println("What kind of set operations were you looking to do?");
         boolean wantsToContinue = true;
@@ -159,8 +189,14 @@ public class StatsLibrary{
         userChoice = 1;
     }  
 
-    //This goes through and adds 1 copy of each element in one list to a union list
-    //Then it does the same for the second, creating a combined list with 1 copy of each element
+    /**
+     * This goes through and adds 1 copy of each unique element in one list to a union list
+     * Then it does the same for the second
+     * This will create a combined list with 1 copy of each element
+     * @param setOne The first list to be unioned
+     * @param setTwo The second list to be unioned
+     * @return The union of the two sets
+     */
     public ArrayList<Double> findUnion(ArrayList<Double> setOne, ArrayList<Double> setTwo){
 
         ArrayList<Double> unionedSet = new ArrayList();
@@ -170,6 +206,7 @@ public class StatsLibrary{
             inSet = false;
             for(int x = 0; x < unionedSet.size(); x++){
                 //Why does java think 1 != 1? WHY
+                //Turns out doubles are odd
                 if(setOne.get(w).equals(unionedSet.get(x))) inSet = true;
             }
             if(!inSet) unionedSet.add(setOne.get(w));
@@ -184,7 +221,13 @@ public class StatsLibrary{
         return unionedSet;
     }
 
-    //This just goes though and find the intersect by checing what elements in set 1 are also in set 2
+    /**
+     * This goes though and find the intersect by checking what elements in set 1 are also in set 2
+     * It does this by maintaining an intersect list, which it then checks every element against
+     * @param setOne The first set for the intersection
+     * @param setTwo The second set for the intersecction
+     * @return The intersection of both sets
+     */
     public ArrayList<Double> findIntersect(ArrayList<Double>setOne, ArrayList<Double>setTwo){
 
         ArrayList<Double> intersectionedSet = new ArrayList();
@@ -203,7 +246,13 @@ public class StatsLibrary{
         return intersectionedSet;
     }
 
-    //This finds all the elements in set 2 not in set one to give us the compliment of set 1
+    /**
+     * This finds all the elements that are not in the first set that aren't in the second
+     * it is assumed the second set will be the total set
+     * @param setOne The set which we want to find the compliment of
+     * @param setTwo The whole total set, or just annother set
+     * @return The compliment of setOne
+     */
     public ArrayList<Double> findCompliment(ArrayList<Double>setOne, ArrayList<Double>setTwo){
         ArrayList<Double> complimentSet1 = new ArrayList();
         boolean inSet;
@@ -219,22 +268,13 @@ public class StatsLibrary{
         return complimentSet1;
     }
 
-    //Takes and finds the mean of a list. Then, subtracts each value in the list by the mean, and squares the result
-    //That is then summed, and devided by the size of the data set-1. This gives the variance, which is rooted to get deviation
-    public double standardDeviationCalculator(ArrayList<Double> dataSet){
 
-        //Finds the mean of the list
-        double listMean = findMean(dataSet);
-        double sum = 0;
-        for(int i = 0; i < dataSet.size(); i++){
-            sum += Math.pow((dataSet.get(i)-listMean), 2);
-        }
-        double standardDeviation = Math.sqrt(sum/(dataSet.size()-1));
-        return standardDeviation;
 
-    }
-
-    //Easy method, just adds up the values in a list, and divides by the total number of elements
+    /**
+     * This will add up the values in a list, and divides by the total number of elements
+     * @param dataSet The dataset to find the mean of
+     * @return The mean(μ) of the dataset
+     */
     public double findMean(ArrayList<Double> dataSet){
         
         double dSum = 0;
@@ -246,21 +286,56 @@ public class StatsLibrary{
         
     }
 
-    //This one is also easy. It takes in a sorted list, and checks to see the size to find the median
+    /**
+     * This is used to find the standard deviation of a list
+     * First it takes and finds the mean of a list using the previous method
+     * Then,  it subtracts each value in the list by the mean, and squares the result
+     * That is then summed, and devided by the size of the data set-1. 
+     * This gives the variance, which is rooted to get deviation
+     * @param dataSet The dataset which you want the standard deviation(σ) of
+     * @return The standard deviation(σ) of the set
+     */
+    public double standardDeviationCalculator(ArrayList<Double> dataSet){
+
+        //Finds the mean of the list
+        double listMean = findMean(dataSet);
+        double sum = 0;
+        for(int i = 0; i < dataSet.size(); i++){
+            sum += Math.pow((dataSet.get(i)-listMean), 2);
+        }
+        double standardDeviation = Math.sqrt(sum/(dataSet.size()-1));
+        return standardDeviation;
+
+    }    
+
+    /**
+     * This method uses a list sorter in order or order a given dataset
+     * Then, if the dataset has an odd count, the center of the dataset is the median. That is found by finind the celing of the size/2
+     * Otherwise, if it has an even count, then the median is the average of the two center values
+     * @param dataSet The dataset you want to find the median of
+     * @return The median value
+     */
     public double findMedian(ArrayList<Double> dataSet){
 
         double dMedian = 0;
-
+        ArrayList<Double> sortedList = listSorter(dataSet);
         //Find the celing of size divided by 2 and that is the median
-        if(dataSet.size()%2 == 1)dMedian = dataSet.get((int)(Math.ceil(dataSet.size()/2.0))-1);
+        if(sortedList.size()%2 == 1)dMedian = sortedList.get((int)(Math.ceil(sortedList.size()/2.0))-1);
         //take the average of the size divided by 2 and divided by 2 + 1
-        else if(dataSet.size()%2 == 0 && dataSet.size() != 0)dMedian = (dataSet.get(dataSet.size()/2-1)+dataSet.get((dataSet.size()/2)))/2.0;
+        else if(sortedList.size()%2 == 0 && sortedList.size() != 0)dMedian = (sortedList.get(sortedList.size()/2-1)+sortedList.get((sortedList.size()/2)))/2.0;
         else System.out.println("There is no median of nothing!");
         
         return dMedian;
     }
 
-    //The mode is extra fun, it uses a hash map to store each value, and the number of times it is repeated
+    /**
+     * This uses a HashMap to find the mode of a dataset
+     * The HashMap allows us to store the count of each value of a dataset
+     * We do this by looping through the dataset, counting each unique value
+     * Then we return whichever value shows up the most
+     * @param dataSet The dataset we want the mode of
+     * @return The mode of the dataset
+     */
     public double findMode(ArrayList<Double> dataSet){
 
         HashMap<Double,Integer> modeTracker = new HashMap<Double,Integer>();
@@ -288,8 +363,15 @@ public class StatsLibrary{
         return currentMode;
     }
 
-    //Gets the number of objects in the set(n), and the number of selected objects from the set(r)
-    //P(number of permutations) = n!/(n-r)!
+    /**
+     *This is used to find the numebr of permutations
+     *If both inputs are not 0, then it performs the permutation calculation for those values
+     *OTherwise ets the number of objects in the set(n), and the number of selected objects from the set(r)
+     //P(number of permutations) = n!/(n-r)!
+     * @param n_TotalObjects
+     * @param r_SelectedObjects
+     * @return
+     */
     public BigInteger findPermutation(int n_TotalObjects, int r_SelectedObjects){
 
         if(n_TotalObjects == 0 && r_SelectedObjects == 0){

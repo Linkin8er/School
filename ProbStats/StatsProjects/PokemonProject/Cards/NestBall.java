@@ -15,6 +15,7 @@ public class NestBall extends PokemonTrainer{
         cardDescription = "Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.";
     }
     
+    //This goes through and gets the basic pokemon in the deck. Then, it prompts the player to select one of the pokemon, which is then added to the bench
     public void playCard(PokemonPlayer targetPlayer, PokemonPlayer opponent, int locationInHand){
 
         ArrayList<Integer> cardLocations = new ArrayList();

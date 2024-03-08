@@ -6,9 +6,11 @@ public class Tester {
         //MonteCarloPokeTester test = new MonteCarloPokeTester(15);
         //MonteCarloBrickDeck bricker = new MonteCarloBrickDeck(5);
         
-        testGame.preGame();
-        testGame.startOfGame();
-        testGame.gameRounds();
+        testGame.runGame();
+
+        //testGame.preGame();
+        //testGame.startOfGame();
+        //testGame.gameRounds();
 
         //statsTester.operationPicker();
     }

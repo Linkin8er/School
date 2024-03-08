@@ -2,6 +2,7 @@ package Cards.Templates;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//This holds the common pieces of all cards
 public class PokemonCard implements Playable{
 
     Scanner scaner = new Scanner(System.in);
@@ -10,6 +11,7 @@ public class PokemonCard implements Playable{
     protected String cardName = "placeholder";
     protected String cardDescription = "placeholder";
 
+    //Most all of these are just basic getters that all cards use. 
     public String getCardType(){ return cardType;}
     public String getCardSubType(){ return cardSubType;}
     public String getCardName(){ return cardName;}
