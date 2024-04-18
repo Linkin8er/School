@@ -1,4 +1,5 @@
 import pandas
+#https://aihalapathirana.medium.com/generative-adversarial-networks-for-anime-face-generation-pytorch-1b4037930e21
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
