@@ -372,13 +372,13 @@ public class StatsLibrary{
     }
 
     /**
-     *This is used to find the numebr of permutations
-     *If both inputs are not 0, then it performs the permutation calculation for those values
-     *OTherwise ets the number of objects in the set(n), and the number of selected objects from the set(r)
-     //P(number of permutations) = n!/(n-r)!
-     * @param n_TotalObjects
-     * @param r_SelectedObjects
-     * @return
+     * This is used to find the number of permutations
+     * If both inputs are not 0, then it performs the permutation calculation for those values
+     * Otherwise it gets the number of objects in the set(n), and the number of selected objects from the set(r)
+     * P(number of permutations) = n!/(n-r)!
+     * @param n_TotalObjects the total objects in the set (n)
+     * @param r_SelectedObjects the total to be selected (r)
+     * @return returns the permutation 
      */
     public BigInteger findPermutation(int n_TotalObjects, int r_SelectedObjects){
 
@@ -396,7 +396,13 @@ public class StatsLibrary{
         
     }
 
-    //This just takes the permutation and divides it by n!
+    /**
+     * This is similar to the last method
+     * If the two inputs are not 0, then uses the permutation on those values, then divides by the r factorial
+     * @param n_TotalObjects The total objects in the set (n)
+     * @param r_SelectedObjects the total to be selected (r)
+     * @return returns the combination
+     */
     public double findCombination(int n_TotalObjects, int r_SelectedObjects){
 
         //Runs the permutation solver, but devides it's answer by r!
@@ -415,11 +421,14 @@ public class StatsLibrary{
 
     }
 
-    //use the permutation and combination solver as needed to help with redundancy
-    //This can solve for the Binomial Distributions: PMF, Variance, standard deviation, and mean
+    /**
+     * This uses the permutation and combination solver as needed to help with redundancy
+     * This can solve for the Binomial Distributions: PMF, Variance, standard deviation, and mean
+     * It gets the n(number of trials), y(number of times for a specific outcome within n trials), and p(probability of success on a single trial) to find the binomial distribution
+     * @return This returns the whichever the user selects of the PMF, Variance, standard deviation, or mean
+     */
     public double findBinomialDistribution(){
-        //Needs to get n(number of trials), x(number of times for a specific outcome within n trials), 
-        //p(probability of success on a single trial), and q(probability of failure on a single trial)
+        //Needs to get n, y, p. solves q as 1-p
         int n_NumberOfTrials;
         int y_NumberOfSucesses;
         double p_ProbabilityOfSucess;
@@ -448,9 +457,14 @@ public class StatsLibrary{
         return binomialDistribution;
     }
 
-    //This can solve for the Geomentric Distributions: PMF, Variance, standard deviation, and mean
+   /**
+     *
+     * This can solve for the Geometric Distribution: PMF, Variance, standard deviation, and mean
+     * It gets the n(trial to get sucess), p(probability of success on a single trial), and q(probability of failure on a single trial)
+     * @return This returns the whichever the user selects of the PMF, Variance, standard deviation, or mean
+     */
     public double findGeometricDistribution(){
-        //Needs to get n(trial to get sucess), p(probability of success on a single trial), and q(probability of failure on a single trial)
+        //Needs to get n, p, and q
         int n_NumberOfTrials;
         double p_ProbabilityOfSucess;
 
@@ -475,11 +489,14 @@ public class StatsLibrary{
         return geometricDistribution;
     }
 
-    //This can solve for the Hypergometric Distributions: PMF, Variance, standard deviation, and mean
+    /**
+     * Solves for the Hypergeometric Distribution: PMF, Variance, standard deviation, and mean
+     * Needs to get n(Our sample size), y(How many of our desired we want), r(Count of desired in set), and N(Total set size)
+     * @return
+     */
     public double findHypergometricDistribution(){
 
-        //Needs to get n(Our sample size), y(How many of our desired we want), 
-        //r(Count of desired in set), and N(Total set size)
+        
         int n_SampleSet;
         int y_Desired;
         int r_DesiredSet;
@@ -521,8 +538,13 @@ public class StatsLibrary{
 //                                                                                                        //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //This runs though and makes sure the user inputs legal choices when picking numbers of some kind. 
-    //This choiceChecker is the same as the other, except this accepts integers
+    /**
+     * This is used in all of my programs to make sure a user enters a legal Integer. 
+     * if both values are -100, then it is assumed there is no bounds
+     * @param nLowerBounds The upper bounds[inclusive] allowed
+     * @param nUpperBounds The lower bounds[inclusive] allowed
+     * @return
+     */
     public int choiceChecker(int nLowerBounds, int nUpperBounds)
     {
         String userInputString = "";
@@ -562,7 +584,14 @@ public class StatsLibrary{
         }        
         return userInputInteger;
     }
-    //This choice checker is the same as the other, but instead is used for doubles
+    
+    /**
+     * This is used in all of my programs to make sure a user enters a legal double. 
+     * if both values are -100, then it is assumed there is no bounds
+     * @param nLowerBounds The upper bounds[inclusive] allowed
+     * @param nUpperBounds The lower bounds[inclusive] allowed
+     * @return
+     */
     public double choiceChecker(double nLowerBounds, double nUpperBounds)
     {
         String userInputString = "";
