@@ -60,6 +60,14 @@
 *
 */
 
+/*
+*   03/29/2024
+*   Got back review, and this needs work. 
+*   No more tight coupling, printlines or scanners inside of a computation methods.
+*   Need to make this more of an actual, useable program.
+*
+*/
+
 //Add conditional prob
 import java.math.BigInteger;
 import java.util.ArrayList;
