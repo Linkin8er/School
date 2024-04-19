@@ -1,11 +1,11 @@
-package ProbStats.Stats Part 2;
+import java.util.Scanner;
+public class Tester2 {
 
-public class Tester {
+    Scanner scan = new Scanner(System.in);
     public static void main(String[] args){
         System.out.println("Hello World");
     }
-}
-
+    
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                        //
 // These next methods don't do any calculations                                                           //
@@ -94,3 +94,4 @@ public class Tester {
         }        
         return userInputDouble;
     }
+}

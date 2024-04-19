@@ -1,6 +1,10 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "School/jfreechart-1.5.3.jar"
+        "c:\\Users\\nicks\\Downloads\\opencsv-3.8.jar"
+    ],
+    "java.project.sourcePaths": [
+        "ProbStats\\Stats Part 1",
+        "ProbStats\\Stats Part 1\\PokemonProject",
+        "ProbStats\\Stats Part 2"
     ]
 }
