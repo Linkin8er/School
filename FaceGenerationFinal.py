@@ -6,14 +6,16 @@ import tensorflow as tf
 from tqdm import tqdm
 import os
 import cv2
+import torch
 from tensorflow import keras 
 import tensorflow as tf
 from keras import layers, Sequential, datasets, Model
 
 dir_path = r"C:/Computer Vision/img_align_celeba/img_align_celeba"
+
 def load_images(folder_path, img_size = (128, 128)):
     X = []
-    limit = 50000
+    limit = 75000
     for img_name in tqdm(os.listdir(folder_path)):
         img_path = os.path.join(folder_path, img_name)
         img_array = cv2.imread(img_path)
@@ -26,7 +28,7 @@ def load_images(folder_path, img_size = (128, 128)):
 
 img_size = 64
 X_train = load_images(dir_path, (img_size, img_size))
-X_train.shape
+print(X_train.shape)
 
 fixed_noise = tf.random.normal((60, 128))
 
@@ -120,7 +122,7 @@ model.compile(gen_optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001),
               disc_optimizer = tf.keras.optimizers.Adam(learning_rate = 0.0001),
               criterion = tf.keras.losses.BinaryCrossentropy(True))
 
-model.fit(X_train, epochs = 100, batch_size = 100)
+model.fit(X_train, epochs = 125, batch_size = 150)
 
 y_pred = model.generator.predict(fixed_noise)
 show_images(y_pred)
