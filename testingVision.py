@@ -1,7 +1,6 @@
-import tensorflow as tf
+import torch
 
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-if tf.test.is_gpu_available(cuda_only=False, min_cuda_compute_capability=None):
-    print("Default GPU Device: ", tf.test.gpu_device_name())
-else:
-    print("Please install GPU version of TF")
+# Check if a GPU is available and set PyTorch to use the GPU
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f'Using device: {device}')
+print(torch.cuda.get_device_name())
