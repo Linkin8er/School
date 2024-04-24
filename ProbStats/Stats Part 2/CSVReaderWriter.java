@@ -3,36 +3,41 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-/**
- * This handles reading from, writing to, and printing CSV files.
- * Originally this jsut handled two columns, but has since been updated for multiple columns
- */
 public class CSVReaderWriter {
 
     /**
-     * Reads a CSV file and returns the data as a List of Lists of Strings.
-     * Each inner List represents a row in the CSV file, where each String is a cell value.
+     * Reads a CSV file and returns the data as a HashMap where each key is a column label from the first row
+     * and the value is a List of Strings containing the column data.
      *
      * @param filePath The path of the file to be read.
-     * @return A list of lists of strings containing the values of the CSV file.
+     * @return A HashMap where keys are column labels and values are Lists of column data.
      */
-    public List<List<String>> readCSV(String filePath) {
-        List<List<String>> records = new ArrayList<>();
+    public Map<String, List<String>> readCSV(String filePath) {
+        Map<String, List<String>> records = new HashMap<>();
+        List<String> columnHeaders = new ArrayList<>();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
             String line;
+            boolean isFirstLine = true;
 
             while ((line = bufferedReader.readLine()) != null) {
-                List<String> values = new ArrayList<>();
                 String[] tokens = line.split(",");
-                for (String token : tokens) {
-                    if (!token.isEmpty()) {
-                        values.add(token.trim());
+                if (isFirstLine) {
+                    for (String header : tokens) {
+                        header = header.trim();
+                        columnHeaders.add(header);
+                        records.put(header, new ArrayList<>());
+                    }
+                    isFirstLine = false;
+                } else {
+                    for (int i = 0; i < tokens.length; i++) {
+                        records.get(columnHeaders.get(i)).add(tokens[i].trim());
                     }
                 }
-                records.add(values);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,22 +46,34 @@ public class CSVReaderWriter {
     }
 
     /**
-     * Writes a List of Lists of Strings to a CSV file.
-     * Each inner List represents a row, and each String is a cell value.
+     * Writes data from a HashMap to a CSV file.
      *
      * @param filePath The file path where the CSV is to be written.
-     * @param data The data to be written to the CSV, structured as a List of Lists of Strings.
+     * @param data The data to be written to the CSV, structured as a HashMap.
      */
-    public void writeCSV(String filePath, List<List<String>> data) {
+    public void writeCSV(String filePath, Map<String, List<String>> data) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
-            for (List<String> row : data) {
-                for (int i = 0; i < row.size(); i++) {
-                    fileWriter.append(row.get(i));
-                    if (i < row.size() - 1) {
-                        fileWriter.append(",");  // Add comma after each cell value, except the last one
+            // Write headers
+            List<String> headers = new ArrayList<>(data.keySet());
+            for (int i = 0; i < headers.size(); i++) {
+                fileWriter.append(headers.get(i));
+                if (i < headers.size() - 1) {
+                    fileWriter.append(",");
+                }
+            }
+            fileWriter.append("\n");
+
+            // Determine the number of rows by finding the size of the first list
+            int numRows = data.get(headers.get(0)).size();
+            for (int row = 0; row < numRows; row++) {
+                for (int col = 0; col < headers.size(); col++) {
+                    List<String> columnData = data.get(headers.get(col));
+                    fileWriter.append(columnData.get(row));
+                    if (col < headers.size() - 1) {
+                        fileWriter.append(",");
                     }
                 }
-                fileWriter.append("\n"); // Move to the next line after writing all cells in a row
+                fileWriter.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,17 +84,20 @@ public class CSVReaderWriter {
      * Prints the data read from the CSV file.
      * Each row is printed on a new line, with each cell separated by a comma.
      *
-     * @param data The CSV data to be printed, structured as a List of Lists of Strings.
+     * @param data The CSV data to be printed, structured as a HashMap.
      */
-    public void printCSV(List<List<String>> data) {
-        for (List<String> row : data) {
-            for (int i = 0; i < row.size(); i++) {
-                System.out.print(row.get(i));
-                if (i < row.size() - 1) {
-                    System.out.print(", ");
-                }
+    public void printCSV(Map<String, List<String>> data) {
+        List<String> headers = new ArrayList<>(data.keySet());
+        headers.forEach(header -> System.out.print(header + ", "));
+        System.out.println();
+
+        int numRows = data.get(headers.get(0)).size();
+        for (int row = 0; row < numRows; row++) {
+            for (String header : headers) {
+                List<String> columnData = data.get(header);
+                System.out.print(columnData.get(row) + ", ");
             }
-            System.out.println(); // Move to the next line after printing all cells in a row
+            System.out.println();
         }
     }
 }

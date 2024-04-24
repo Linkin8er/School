@@ -12,18 +12,15 @@ public class SalterSmoother {
      * @param max The maximum amount to add.
      * @return A new list with modified force values.
      */
-    public List<List<String>> saltData(List<List<String>> data, double min, double max) {
+    public List<String> saltData(List<String> data, double min, double max) {
         Random random = new Random();
-        List<List<String>> saltedData = new ArrayList<>();
+        List<String> saltedData = new ArrayList<>();
 
-        for (List<String> entry : data) {
-            double variable = Double.parseDouble(entry.get(0));
-            double force = Double.parseDouble(entry.get(1));
+        for (String entry : data) {
+            double force = Double.parseDouble(entry);
             double randomValue = min + (max - min) * random.nextDouble();
             List<String> saltedEntry = new ArrayList<>();
-            saltedEntry.add(String.format("%.2f", variable));
-            saltedEntry.add(String.format("%.2f", force + randomValue));
-            saltedData.add(saltedEntry);
+            saltedData.add(String.format("%.2f", force + randomValue));
         }
 
         return saltedData;
@@ -36,24 +33,23 @@ public class SalterSmoother {
      * @param k The number of neighbors to include in the average.
      * @return A new list with smoothed force values.
      */
-    public List<List<String>> smoothData(List<List<String>> data, int k) {
-        List<List<String>> smoothedData = new ArrayList<>();
+    public List<String> smoothData(List<String> data, int k) {
+        List<String> smoothedData = new ArrayList<>();
 
         for (int i = 0; i < data.size(); i++) {
             double sum = 0.0;
             int count = 0;
 
             for (int j = Math.max(0, i - k); j <= Math.min(data.size() - 1, i + k); j++) {
-                double force = Double.parseDouble(data.get(j).get(1));
+                double force = Double.parseDouble(data.get(j));
                 sum += force;
                 count++;
             }
 
             double average = sum / count;
             List<String> smoothedEntry = new ArrayList<>();
-            smoothedEntry.add(data.get(i).get(0));  // Keep the variable value unchanged
+            smoothedEntry.add(data.get(i));  // Keep the variable value unchanged
             smoothedEntry.add(String.format("%.2f", average));
-            smoothedData.add(smoothedEntry);
         }
 
         return smoothedData;

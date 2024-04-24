@@ -9,7 +9,7 @@ public class ForceCalculator {
 
     // default parameters for the calulator for testing
     String constant = "m";
-    double constantValue = 100;
+    double constantValue = 800.7;
     double start = 0;
     double end = 100;
     double incrament = 1;

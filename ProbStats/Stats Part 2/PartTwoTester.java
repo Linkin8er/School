@@ -22,6 +22,11 @@ public class PartTwoTester {
         for (List<String> result : results) {
             System.out.println(result.get(0) + " " + result.get(1));
         }
+
         CSVTester.writeCSV("WritingTest2.csv", results);
+
+        SalterSmoother seasoning = new SalterSmoother();
+
+        List<String> newData = seasoning.saltData(data, 0.0, 5.0);
     }
 }
