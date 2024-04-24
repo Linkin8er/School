@@ -17,7 +17,7 @@ dir_path = r"C:/Computer Vision/img_align_celeba/img_align_celeba"
 
 # Custom dataset class for loading images
 class ImageDataset(Dataset):
-    def __init__(self, folder_path, img_size=(128, 128), limit=100000):
+    def __init__(self, folder_path, img_size=(128, 128)):
         """
         Initialize the dataset with a path, image size, and limit on the number of images.
         folder_path: Path to the directory containing images.
@@ -27,8 +27,6 @@ class ImageDataset(Dataset):
         self.img_size = img_size
         self.data = []
         for img_name in tqdm(os.listdir(folder_path)):
-            if len(self.data) >= limit:
-                break
             img_path = os.path.join(folder_path, img_name)
             img = cv2.imread(img_path)
             img = cv2.resize(img, self.img_size)
@@ -142,7 +140,7 @@ optimizer_D = optim.Adam(D.parameters(), lr=0.0002, betas=(0.5, 0.999))
 criterion = nn.BCELoss()
 
 # Training loop for the GAN
-num_epochs = 300
+num_epochs = 500
 for epoch in range(num_epochs):
     for real_images in tqdm(dataloader):
         batch_size = real_images.size(0)
