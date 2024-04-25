@@ -16,8 +16,8 @@ public class CSVReaderWriter {
      * @param filePath The path of the file to be read.
      * @return A HashMap where keys are column labels and values are Lists of column data.
      */
-    public Map<String, List<String>> readCSV(String filePath) {
-        Map<String, List<String>> records = new HashMap<>();
+    public HashMap<String, List<String>> readCSV(String filePath) {
+        HashMap<String, List<String>> records = new HashMap<>();
         List<String> columnHeaders = new ArrayList<>();
 
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
@@ -51,7 +51,7 @@ public class CSVReaderWriter {
      * @param filePath The file path where the CSV is to be written.
      * @param data The data to be written to the CSV, structured as a HashMap.
      */
-    public void writeCSV(String filePath, Map<String, List<String>> data) {
+    public void writeCSV(String filePath, HashMap<String, List<String>> data) {
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             // Write headers
             List<String> headers = new ArrayList<>(data.keySet());
@@ -87,7 +87,13 @@ public class CSVReaderWriter {
      * @param data The CSV data to be printed, structured as a HashMap.
      */
     public void printCSV(Map<String, List<String>> data) {
-        List<String> headers = new ArrayList<>(data.keySet());
+    if (data.isEmpty()) {
+        System.out.println("No data to display.");
+        return;
+    }
+
+    List<String> headers = new ArrayList<>(data.keySet());
+    if (!headers.isEmpty()) {
         headers.forEach(header -> System.out.print(header + ", "));
         System.out.println();
 
@@ -95,9 +101,17 @@ public class CSVReaderWriter {
         for (int row = 0; row < numRows; row++) {
             for (String header : headers) {
                 List<String> columnData = data.get(header);
-                System.out.print(columnData.get(row) + ", ");
+                if (columnData.size() > row) {
+                    System.out.print(columnData.get(row) + ", ");
+                } else {
+                    System.out.print(" , ");
+                }
             }
             System.out.println();
         }
+    } else {
+        System.out.println("Headers are missing.");
     }
+}
+
 }

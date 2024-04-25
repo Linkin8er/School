@@ -1,18 +1,19 @@
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * This program goes through and plots the 
+ * This program calculates force and organizes the results in a map.
  */
 public class ForceCalculator {
 
-    // default parameters for the calulator for testing
+    // Default parameters for the calculator for testing
     String constant = "m";
     double constantValue = 800.7;
     double start = 0;
     double end = 100;
-    double incrament = 1;
+    double increment = 1;
 
     /**
      * Sets up the calculation by the user.
@@ -32,8 +33,8 @@ public class ForceCalculator {
         System.out.println("Enter the end value for the variable range: ");
         end = scanner.nextDouble();
 
-        System.out.println("Enter the incrament size for the variable range: ");
-        incrament = scanner.nextDouble();
+        System.out.println("Enter the increment size for the variable range: ");
+        increment = scanner.nextDouble();
 
         scanner.close(); // Close the scanner to free resources
     }
@@ -46,31 +47,35 @@ public class ForceCalculator {
      * @param constantValue The value of the constant variable
      * @param start The starting value of the variable that changes
      * @param end The ending value of the variable that changes
-     * @param incrament The incrament of the changing variable
-     * @return A list of lists of strings, where each inner list represents [variable value, force]
+     * @param increment The increment of the changing variable
+     * @return A map where the keys are column headers and the values are lists of data
      */
-    public List<List<String>> calculateForce(String constant, double constantValue, double start, double end, double incrament) {
+    public HashMap<String, List<String>> calculateForce(String constant, double constantValue, double start, double end, double increment) {
 
-        List<List<String>> records = new ArrayList<>();
-        
+        HashMap<String, List<String>> resultMap = new HashMap<>();
+        List<String> values = new ArrayList<>();
+        List<String> forces = new ArrayList<>();
+
         if ("m".equals(constant)) {
-            for (double a = start; a <= end; a += incrament) {
+            resultMap.put("Acceleration", values);
+            resultMap.put("Force", forces);
+
+            for (double a = start; a <= end; a += increment) {
                 double force = constantValue * a;
-                List<String> record = new ArrayList<>();
-                record.add(String.format("%.2f", a));
-                record.add(String.format("%.2f", force));
-                records.add(record);
+                values.add(String.format("%.2f", a));
+                forces.add(String.format("%.2f", force));
             }
         } else if ("a".equals(constant)) {
-            for (double m = start; m <= end; m += incrament) {
+            resultMap.put("Mass", values);
+            resultMap.put("Force", forces);
+
+            for (double m = start; m <= end; m += increment) {
                 double force = m * constantValue;
-                List<String> record = new ArrayList<>();
-                record.add(String.format("%.2f", m));
-                record.add(String.format("%.2f", force));
-                records.add(record);
+                values.add(String.format("%.2f", m));
+                forces.add(String.format("%.2f", force));
             }
         }
         
-        return records;
+        return resultMap;
     }
 }
