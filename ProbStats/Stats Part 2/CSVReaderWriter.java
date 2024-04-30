@@ -87,31 +87,31 @@ public class CSVReaderWriter {
      * @param data The CSV data to be printed, structured as a HashMap.
      */
     public void printCSV(Map<String, List<String>> data) {
-    if (data.isEmpty()) {
-        System.out.println("No data to display.");
-        return;
-    }
-
-    List<String> headers = new ArrayList<>(data.keySet());
-    if (!headers.isEmpty()) {
-        headers.forEach(header -> System.out.print(header + ", "));
-        System.out.println();
-
-        int numRows = data.get(headers.get(0)).size();
-        for (int row = 0; row < numRows; row++) {
-            for (String header : headers) {
-                List<String> columnData = data.get(header);
-                if (columnData.size() > row) {
-                    System.out.print(columnData.get(row) + ", ");
-                } else {
-                    System.out.print(" , ");
-                }
-            }
-            System.out.println();
+        if (data.isEmpty()) {
+            System.out.println("No data to display.");
+            return;
         }
-    } else {
-        System.out.println("Headers are missing.");
+
+        List<String> headers = new ArrayList<>(data.keySet());
+        if (!headers.isEmpty()) {
+            headers.forEach(header -> System.out.print(header + ", "));
+            System.out.println();
+
+            int numRows = data.get(headers.get(0)).size();
+            for (int row = 0; row < numRows; row++) {
+                for (String header : headers) {
+                    List<String> columnData = data.get(header);
+                    if (columnData.size() > row) {
+                        System.out.print(columnData.get(row) + ", ");
+                    } else {
+                        System.out.print(" , ");
+                    }
+                }
+                System.out.println();
+            }
+        } else {
+            System.out.println("Headers are missing.");
+        }
     }
-}
 
 }

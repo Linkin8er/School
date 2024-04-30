@@ -416,7 +416,6 @@ public class StatsLibrary{
         }
 
         double combinations = (findPermutation(n_TotalObjects, r_SelectedObjects)).doubleValue()/(factorialB(r_SelectedObjects)).doubleValue();
-
         return combinations;
 
     }
