@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 /**
  * This program calculates force and organizes the results in a map.
+ * This was the formula I chose for my PSS programs
  */
 public class ForceCalculator {
 
